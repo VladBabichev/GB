@@ -1,0 +1,33 @@
+<div #container *ngIf="cols > 0" class="mat-app-background mdc-grid-list--tile-gutter-2" 
+	 style="width:100%;opacity:1;border:none;padding-top:0px;padding-bottom:0px;">
+	
+	<dx-scroll-view style="margin-left:0px;margin-top:0px;margin-bottom:0px;border:none;width:100%;"
+					showScrollbar="always"
+					(onUpdated)="onUpdated($event)"
+					(onInitialized)="onInitialized($event)"
+					height ="200px"
+					useNative="true">
+
+			<mat-grid-list #grid [rowHeight]="rowHeight" [cols]="cols" gutterSize="10px" [style.background]="styleBackgroundGrid"
+						   (window:resize)="onResize($event)">
+
+				<mat-grid-tile *ngFor="let widget of widgets" (mouseover)="onMouseOver($event,widget)" (mouseup)="onMouseUp($event,widget)"
+							   (mouseleave)="onMouseLeave($event,widget) "
+							   [colspan]="widget.input.columnSpan.value"
+							   [rowspan]="widget.input.rowSpan.value"
+							   [draggable]="draggable" (dragstart)="dragstart($event,widget)"
+							   (dragenter)="dragenter($event,widget)"
+							   [style.border]="styleWidgetBorder"
+							   [style.border-color]="bordeColor"
+							   [style.border-width]="styleBorderWidth"
+							   [style.background]="styleBackground">
+
+					<app-widgetFactory [componentId]="widget.input.id" [widget]="widget" (editWidget)="onWidgetEdit($event)"
+									   (bubble)="onBubble($event)">
+					</app-widgetFactory>
+				</mat-grid-tile>
+			</mat-grid-list>
+		<!--</div>-->
+	</dx-scroll-view>
+</div>
+

@@ -1,0 +1,174 @@
+﻿<div #container *ngIf="step === 1">
+    <div #toolbar class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <dx-button 
+                    hint="{{'Refresh grid' | translate}}"
+                    icon="refresh"
+                    (onClick)="onRefresh()">
+                </dx-button>
+            </div>
+        </div>
+    </div>
+    <dx-data-grid [allowColumnReordering]="true"
+                  [allowColumnResizing]="true"
+                  [rowAlternationEnabled]="true"
+                  columnResizingMode="widget"
+                  [noDataText]="translate('dxDataGrid-noViewText')"
+                  [dataSource]="dataSource"
+                  [showRowLines]="true"
+                  (onRowRemoving)="onRowRemoving($event)"
+                  (onCellPrepared)="onCellPrepared($event)"
+                  (onSelectionChanged)="onSelectionChanged($event)">
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+        <dxi-column [allowEditing]="false"
+                    [allowSearch]="false"
+                    dataField="id"
+                    dataType="string"
+                    [visible]="false">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="name"
+            [caption]="translate('dxDataGrid-name')"                  
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="template"
+            [caption]="translate('dxDataGrid-template')"                  
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="projectsCount"
+            [caption]="translate('dxDataGrid-projectsCount')"                  
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [calculateFilterExpression]="calculateDateTimeFilterExpression"
+            dataField="createdAt"
+            [caption]="translate('dxDataGrid-createdAt')"                  
+            dataType="date"
+            format="shortDateShortTime"
+            [formItem]="{ visible: false }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [calculateFilterExpression]="calculateDateTimeFilterExpression"
+            [caption]="translate('dxDataGrid-updatedAt')"                  
+            dataField="updatedAt"
+            dataType="date"
+            format="shortDateShortTime"
+            [formItem]="{ visible: false }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="comments"
+            [caption]="translate('dxDataGrid-comments')"                  
+            dataType="string"
+            [editorOptions]="{ maxLength: 256, height: 100 }">
+        </dxi-column>
+        <dxi-column [width]="65"
+                    [minWidth]="65"
+                    [allowResizing]="false"
+                    [allowReordering]="false"
+                    cellTemplate="buttonShareCellTemplate">
+        </dxi-column>
+
+        <dxo-editing [allowDeleting]="true"
+                     mode="form">
+        </dxo-editing>
+
+        <dxo-grouping [contextMenuEnabled]="true">
+        </dxo-grouping>
+
+        <dxo-group-panel [visible]="true">
+        </dxo-group-panel>
+
+        <dxo-pager [allowedPageSizes]="[10, 20, 50]"
+                   [showInfo]="true"
+                   [showNavigationButtons]="true"
+                   [showPageSizeSelector]="true"
+                   [visible]="true">
+        </dxo-pager>
+
+        <dxo-paging [enabled]="true"
+                    [pageSize]="10">
+        </dxo-paging>
+        <dxo-selection mode="single"
+                       [allowSelectAll]="false">
+        </dxo-selection>
+        <dxo-state-storing [enabled]="true"
+                           [savingTimeout]="200"
+                           storageKey="view-list-grid-state"
+                           type="sessionStorage">
+        </dxo-state-storing>
+
+        <div *dxTemplate="let cellData of 'buttonShareCellTemplate'">
+            <div style="text-align: center">
+                <a class="dx-link" (click)="onShareView(content, cellData.data)">{{'Share' | translate}}</a>
+            </div>
+        </div>
+    </dx-data-grid>
+</div>
+<div *ngIf="step === 2">
+    <!--<app-chart-view (close)="onCloseChart()"
+                    [displayCustomTemplates]="false"
+                    [displaySystemPlotSelector]="false">
+    </app-chart-view>-->
+
+    <app-chartjs-view 
+        (close)="onCloseChart()" 
+        [displayCustomTemplates]="false"
+        [displaySystemPlotSelector]="false" 
+        [displayBackButton]="true">
+    </app-chartjs-view>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'Share' | translate}} <strong>{{sharedView.name}}</strong> {{'View' | translate | lowercase}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <span *ngIf="!sharedLink">{{'No link created yet' | translate}}</span>
+                <span *ngIf="sharedLink && !showSharedLinkInfo">{{'Anyone with the link can access this view' | translate}}</span>
+                <input *ngIf="sharedLink && showSharedLinkInfo" type="text" class="shared-view-link-info" [ngModel]="sharedLink" #sharedLinkTarget readonly />
+            </div>
+            <div class="col-sm text-right">
+                <span ngbDropdown class="d-inline-block" *ngIf="!sharedLink">
+                    <a ngbDropdownToggle id="createSharedViewLink" class="shared-view-link">{{'Create a link' | translate}} <span class="caret"></span></a>
+                    <ul ngbDropdownMenu aria-labelledby="createSharedViewLink" role="menu">
+                        <li class="dropdown-item"><a class="shared-view-link" (click)="onCreateSharedLink(sharedView.id, 0)">{{'No expiration' | translate}}</a></li>
+                        <li class="dropdown-item"><a class="shared-view-link" (click)="onCreateSharedLink(sharedView.id, 1)">{{'1 day expiration' | translate}}</a></li>
+                        <li class="dropdown-item"><a class="shared-view-link" (click)="onCreateSharedLink(sharedView.id, 2)">{{'1 week expiration' | translate}}</a></li>
+                        <li class="dropdown-item"><a class="shared-view-link" (click)="onCreateSharedLink(sharedView.id, 3)">{{'1 month expiration' | translate}}</a></li>
+                    </ul>
+                </span>
+
+
+                <!--<a *ngIf="!sharedLink" class="shared-view-link" (click)="onCreateSharedLink(sharedView.id)">Create a link</a>-->
+                <a *ngIf="sharedLink && !showSharedLinkInfo" class="shared-view-link" [ngxClipboard]="sharedLinkTarget" (click)="onCopySharedLink()">{{'Copy link' | translate}}</a>
+                <a *ngIf="sharedLink && showSharedLinkInfo" class="shared-view-link" (click)="showSharedLinkInfo = false">{{'Hide link' | translate}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">{{'Close' | translate}}</button>
+    </div>
+</ng-template>

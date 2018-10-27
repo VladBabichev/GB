@@ -1,0 +1,63 @@
+﻿<div class="container-fluid template-editor">
+    <ngb-tabset 
+        justify="center" 
+        type="pills">
+    
+        <ngb-tab title="Template">
+            <ng-template ngbTabContent>
+
+                <div class="col-sm-12">
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Template name:</label>
+                            <input type="text" class="form-control dx-texteditor-input" [value]="plotTemplate?.name || ''" (change)="onChangeTemplateName($event)">
+                        </div>
+                        <div class="form-group">
+                            <label>X-Axis:</label>
+                            <select class="form-control dx-texteditor-input"
+                                    [(ngModel)]="selectedArgumentAxisItem"
+                                    (ngModelChange)="onChangeArgumentAxisItem($event)">
+                                <option value="None">Select X-Axis Dimension</option>
+                                <option *ngFor="let argumentItem of argumentAxisItems" [value]="argumentItem.id">{{argumentItem.itemName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" *ngIf="showValueAxisSelector">
+                            <label>Y-Axis:</label>
+                            <angular2-multiselect 
+                                #ySeries
+                                [data]="filteredValueAxisItems"
+                                [(ngModel)]="selectedValueAxisItems"
+                                [settings]="filteredValueAxisControlSettings"
+                                (onSelect)="onItemSelect($event)"
+                                (onDeSelect)="OnItemDeSelect($event)"
+                                (onSelectAll)="onSelectAll($event)"
+                                (onDeSelectAll)="onDeSelectAll($event)">
+                            </angular2-multiselect>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+
+            </ng-template>
+        </ngb-tab>
+    
+        <ngb-tab title="Appearance Settings">
+            <ng-template ngbTabContent>
+                <app-chart-appearance-editor 
+                    [plotParameters]="plotParameters">
+                </app-chart-appearance-editor>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Data Display Settings">
+            <ng-template ngbTabContent>
+            
+
+
+            </ng-template>
+        </ngb-tab>
+
+
+    </ngb-tabset>
+</div>

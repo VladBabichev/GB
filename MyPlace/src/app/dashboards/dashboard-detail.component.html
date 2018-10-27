@@ -1,0 +1,63 @@
+﻿<div> 
+    <div class="row justify-content-md-center">
+        <div class="col-md-offset-1 col-md-11" style="padding-top:10px;padding-bottom:10px;">
+            <span style="font-size:x-large">{{dashboardHeader}}</span>
+        </div>
+        <div class="col-md-offset-1 col-md-11">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                <div class="form-group">
+                    <label for="name">Dashboard name:</label>
+                    <dx-text-box formControlName="name" width="100%"
+                                 placeholder="Enter a name"
+                                 class="form-control dx-texteditor-input"
+                                 [inputAttr]="{id: 'name'}">
+                    </dx-text-box>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <dx-text-area formControlName="description" height="100px" width="100%"
+                                  placeholder="Type a text here..."
+                                  [inputAttr]="{id: 'description'}"
+                                  class="form-control dx-texteditor-input">
+                    </dx-text-area>
+                </div>
+               
+                <div class="form-group">
+                    <label for="columnsCount">
+                        Layout colums count:
+                    </label>
+                    <dx-number-box formControlName="columnsCount" width="150px"
+                                   format="#0"
+                                   [inputAttr]="{id: 'columnsCount'}"
+                                   [showSpinButtons]="true"
+                                   [showClearButton]="true"
+                                   [min]="2"
+                                   class="form-control dx-texteditor-input"
+                                   [max]="8">
+                    </dx-number-box>
+                </div>
+               
+                <div class="form-group">
+                    <label for="rowsHight">
+                        Rows hight:
+                    </label>
+                    <dx-number-box formControlName="rowHeight" width="150px"
+                                   format="#0"
+                                   [inputAttr]="{id: 'rowHeight'}"
+                                   [showSpinButtons]="true"
+                                   [showClearButton]="true"
+                                   [min]="200"
+                                   class="form-control dx-texteditor-input"
+                                   [max]="600">
+                    </dx-number-box>
+                </div>
+
+                <div class="form-group" style="float:right">
+                    <button class="btn btn-primary mr-2" type="submit">Save</button>
+                    <button class="btn btn-secondary" type="button" (click)="onCancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

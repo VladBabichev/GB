@@ -1,0 +1,34 @@
+﻿.stick-to-top {
+    top: 0;
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+    padding: 15px 30px 15px 0;
+    background-color: white;
+}
+.popup-widget {
+    padding: 0px !important;
+}
+
+#viewWidgetId {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    /*assuming that #mydiv has the height of 100px margin-left: -100px;
+    assuming that #mydiv has the width of 200px*/
+}
+.center-div {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;  
+    background-color: #ccc;
+    border-radius: 3px;
+}
+.icon {
+    font-size: 28px;
+    color:yellow;
+}

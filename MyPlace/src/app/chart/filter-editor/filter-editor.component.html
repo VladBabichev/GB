@@ -1,0 +1,107 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <fieldset>
+                <legend>{{'chart-cycle-range-settings-title' | translate}}</legend>
+                <div class="form-group">
+                    <label for="filter-editor-cycle-from">{{'From' | translate}}:</label>
+                    <dx-number-box #from
+                        [inputAttr]="{id: 'filter-editor-cycle-from'}"
+                        [value]="value.from"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="1"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="filter-editor-cycle-to">{{'To' | translate}}:</label>
+                    <dx-number-box #to
+                        [inputAttr]="{id: 'filter-editor-cycle-to'}"
+                        [value]="value.to"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="1"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="filter-editor-cycle-number">{{'chart-cycle-range-settings-cycle-index-filter' | translate}}:</label>
+                    <dx-number-box #everyNth
+                        [inputAttr]="{id: 'filter-editor-cycle-number'}"
+                        [value]="value.everyNth"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="2"
+                        [max]="1000">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="filter-editor-custom">{{'chart-cycle-range-settings-cycle-custom-filter' | translate}}:</label>
+                    <input id="filter-editor-custom" #custom type="text" class="form-control dx-texteditor-input" [value]="value.custom || ''">
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-12">
+            <fieldset>
+                <legend>{{'miscellaneous-settings' | translate}}</legend>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input #disableCharge type="checkbox" [checked]="value.disableCharge || false">
+                            {{'Disable charge' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input #disableDischarge type="checkbox" [checked]="value.disableDischarge || false">
+                            {{'Disable discharge' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="filter-editor-cycle-min-y">{{'MinY' | translate}}:</label>
+                    <dx-number-box #minY
+                        [inputAttr]="{id: 'filter-editor-cycle-min-y'}"
+                        [value]="value.minY"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="filter-editor-cycle-max-y">{{'MaxY' | translate}}:</label>
+                    <dx-number-box #maxY
+                        [inputAttr]="{id: 'filter-editor-cycle-max-y'}"
+                        [value]="value.maxY"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true">
+                    </dx-number-box>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-12">
+            <fieldset>
+                <legend>{{'Differential Analysis' | translate}}</legend>
+                <div class="form-group">
+                    <label for="filter-editor-threshold">{{'Threshold' | translate}}:</label>
+                    <dx-number-box
+                        #threshold
+                        [inputAttr]="{id: 'filter-editor-threshold'}"
+                        [value]="value.threshold"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="0">
+                    </dx-number-box>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-12">
+            <div class="modal-footer pr-0">
+                <button class="btn btn-secondary" (click)="onCancel()">{{'Cancel' | translate}}</button>
+                <button class="btn btn-primary" (click)="onSave(from, to, everyNth, custom, disableCharge, disableDischarge, threshold, minY, maxY)">{{'Apply' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

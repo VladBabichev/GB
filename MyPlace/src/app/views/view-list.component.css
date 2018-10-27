@@ -1,0 +1,20 @@
+﻿.stick-to-top {
+    top: 0;
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+    padding: 15px 30px 15px 0;
+    background-color: white;
+}
+
+.shared-view-link {
+    cursor: pointer;
+}
+
+.shared-view-link-info {
+    width: 100%;
+    padding: 3px;
+    padding-left: 0;
+    text-overflow: ellipsis;
+    border: none;
+}

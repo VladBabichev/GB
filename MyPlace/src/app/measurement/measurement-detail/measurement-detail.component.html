@@ -1,0 +1,109 @@
+<div class="measurement-form row justify-content-md-center">
+    <div class="col-md-offset-3 col-md-6">
+		<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+			<div class="form-group">
+				<label for="name">{{'measurement-name' | translate}}:</label>
+				<dx-text-box 
+					formControlName="name"
+					[maxLength]="128"
+					[inputAttr]="{id: 'name'}">
+				</dx-text-box>
+				<div class="alert alert-danger"
+					 *ngIf="!validateControl('name') && form.get('name').hasError('required')">
+					{{'validation-measurement-name-required' | translate}}
+				</div>
+				<div class="alert alert-danger"
+					 *ngIf="!validateControl('name') && form.get('name').hasError('maxlength')">
+					 {{'validation-measurement-name-toolong' | translate}}
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<label for="argumentTypeId">Argument unit:</label>
+				<select class="form-control dx-texteditor-input" id="argumentTypeId" formControlName="argumentTypeId">
+					<option *ngFor="let argumentType of argumentTypes" [value]="argumentType.id">{{argumentType.name}}</option>
+				</select>
+			</div> -->
+			<div class="form-group">
+				<label>{{'Specifications' | translate}}:</label>				
+				<button class="btn btn-link float-right" (click)="onAddSpecification()" type="button">{{'Assign to specification' | translate}}</button>
+				<dx-tag-box
+					[items]="specificationsList"
+					[(value)]="specificationItems"
+					[hideSelectedItems]="true"
+					valueExpr="id"
+					displayExpr="name"
+					itemTemplate="listItem"
+					tagTemplate="tagTemplate">
+
+					<div *dxTemplate="let item of 'listItem'">
+						{{item.name}} ({{item.unit}})
+					</div>
+					<div *dxTemplate="let item of 'tagTemplate'">
+						<div class="dx-tag-content">
+							<span>{{item.name}} ({{item.unit}})</span><div class="dx-tag-remove-button"></div>
+						</div>
+					</div>
+				</dx-tag-box>
+			</div>
+			<div class="form-group" formArrayName="items">
+				<ngb-accordion activeIds="measurement-values">
+					<ngb-panel [title]="'measurement-values-title' | translate" id="measurement-values">
+						<ng-template ngbPanelContent>
+							<div class="row">
+								<dx-data-grid 
+									[noDataText]="'dxDataGrid-noSpecificationConstrainsText' | translate"
+									[allowColumnReordering]="false"
+									[allowColumnResizing]="false"
+									[dataSource]="measurementItems"
+									[showRowLines]="true"
+									(onInitNewRow)="onMeasurementRowInit($event)"
+									(onRowValidating)="onMeasurementRowValidating($event)"
+									(onRowInserted)="onMeasurementAdded($event)">
+									<dxo-sorting mode="none"></dxo-sorting>
+									<dxo-editing 
+										mode="cell"
+										[allowUpdating]="true"
+										[allowDeleting]="true"
+										[allowAdding]="true">
+									</dxo-editing>
+
+									<dxi-column 
+										dataField="index"
+										dataType="number"
+										[caption]="Index"
+										sortOrder="asc"
+										sortIndex="0">
+										
+										<dxi-validation-rule type="required"></dxi-validation-rule>
+										<dxi-validation-rule type="custom" 
+											[validationCallback]="argumentUniqueValidation" 
+											[reevaluate]="true"
+											[message]="'validation-index-unique' | translate">
+										</dxi-validation-rule>
+									</dxi-column>
+				
+									<dxi-column 
+										dataField="value"
+										dataType="number"
+										[caption]="Value">
+
+										<dxi-validation-rule type="required"></dxi-validation-rule>
+									</dxi-column>
+								</dx-data-grid>
+							</div>
+							<!-- <div class="row">
+								<div class="col">
+									<button class="btn btn-link float-right" (click)="onAddExpectation()" type="button">New Constraint</button>
+								</div>
+							</div> -->
+						</ng-template>
+					</ngb-panel>
+				</ngb-accordion>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary mr-2" type="submit">{{'Save' | translate}}</button> 
+				<button class="btn btn-secondary" type="button" (click)="onCancel()">{{'Cancel' | translate}}</button>
+			</div>
+		</form>
+    </div>
+</div>

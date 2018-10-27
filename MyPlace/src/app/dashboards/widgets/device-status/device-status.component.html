@@ -1,0 +1,97 @@
+<div #container style="width:calc(100%-10px);height:calc(100% - 7ex);border:none;border-width:1px;border-color:gray;margin:10px;padding:0px;">
+
+	<dx-data-grid #gridContainer
+				  style="width:100%;"
+				  [height] ="getHeight(container)"
+				  id="gridContainer"
+				  [dataSource]="dataItems"
+				  [showBorders]="false"
+				  [showColumnHeaders]="false"
+				  [showColumnLines]="false"
+				  [showRowLines]="false"
+				  (onCellPrepared)="onCellPrepared($event)">
+
+		<dxi-column dataField="f0"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>1"
+					dataField="f1"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>2"
+					dataField="f2"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>3"
+					dataField="f3"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>4"
+					dataField="f4"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>5"
+					dataField="f5"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>6"
+					dataField="f6"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>7"
+					dataField="f7"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>8"
+					dataField="f8"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxi-column *ngIf="deviceInfo.columnCount>9"
+					dataField="f9"
+					[allowFiltering]="false"
+					[allowSorting]="false"
+					cellTemplate="cellTemplate">
+		</dxi-column>
+
+		<dxo-paging [enabled]="false"
+					[pageSize]="6">
+		</dxo-paging>
+
+		<!--<dxo-scrolling [showScrollbar]="onHower">
+	</dxo-scrolling>-->
+
+		<div *dxTemplate="let data of 'cellTemplate'" style="border:solid;border-width:1px;border-color:gray;font-size:x-small;padding-top:5px;padding-bottom:5px;padding-left:3em;padding-right:3em;margin-left:-3px;margin-right:-3px;margin-top:-3px;margin-bottom:-3px;">
+			<span>Channel: {{data.value.chan}}</span>
+			<br />
+			<span>Status: {{data.value.statName}}</span>
+		</div>
+	</dx-data-grid>
+</div>

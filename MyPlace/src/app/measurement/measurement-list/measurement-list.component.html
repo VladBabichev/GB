@@ -1,0 +1,56 @@
+<div class="row justify-content-md-center">
+    <dx-data-grid 
+        [allowColumnReordering]="false"
+        [allowColumnResizing]="true"
+        [rowAlternationEnabled]="true"
+        [showRowLines]="true"
+        [showBorders]="true"
+        [wordWrapEnabled]="true"
+        columnResizingMode="widget"
+        [noDataText]="'dxDataGrid-noMeasurementsText' | translate"
+        [dataSource]="dataSource"
+        [remoteOperations]="true"
+        (onCellPrepared)="onCellPrepared($event)"
+        (onEditingStart)="onEditingStart($event)">
+        
+        <dxo-export [enabled]="false"></dxo-export>
+		<dxi-column 
+            [caption]="'dxDataGrid-name' | translate"
+            dataField="name"
+            dataType="string"
+            width="40+'%'">
+        </dxi-column>
+        
+		<dxi-column 
+            [caption]="'dxDataGrid-specificationAssigments' | translate"
+            dataFiled="specificationAssigments"
+            dataType="string"
+            width="30+'%'"
+            [calculateDisplayValue]="specificationCellTextValueFormat">
+        </dxi-column>
+
+		<dxi-column 
+            [caption]="'dxDataGrid-createdAt' | translate"
+            [allowEditing]="false"
+            [formItem]="{ visible: false }"
+            dataField="createdAt"
+            dataType="date"
+            format="shortDateShortTime"
+            width="auto">
+        </dxi-column>
+
+        <dxo-editing mode="form"
+            [allowDeleting]="true"
+            [allowUpdating]="true">
+        </dxo-editing>
+
+        <div *dxTemplate="let data of 'specificationsCellTemplate'">
+
+            <span *ngFor="let assigment of data.value">
+                {{assigment.name}} ({{assigment.unit}})
+            </span>
+
+        </div>
+
+    </dx-data-grid>	
+</div>

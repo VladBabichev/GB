@@ -1,0 +1,12 @@
+<div class="eng-modal">
+    <div class="modal-header eng-modal-header">
+      <span class="icon pull-left" *ngIf="modalType" [ngClass]="modalClass"></span>
+      <h2 class="modal-title eng-modal-title pull-left">{{ title }}</h2>
+      <button class="close eng-modal__close pull-right" type="button" aria-label="Close" (click)="activeModal.dismiss()">
+        <span class="icon icon-close" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="modal-body eng-modal-body">
+      <ng-content></ng-content>
+    </div>
+  </div>  

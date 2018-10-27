@@ -1,0 +1,96 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <fieldset>
+                <legend>{{'chart-axis-range-settings-title' | translate}}</legend>
+                <div class="form-group">
+                    <label for="chart-axis-range-settings-x-from">{{'chart-axis-range-settings-x-from' | translate}}:</label>
+                    <dx-number-box 
+                        #xAxisFrom
+                        [inputAttr]="{id: 'chart-axis-range-settings-x-from'}"
+                        [value]="value.xAxis?.from"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="-1000000"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+
+                <div class="form-group">
+                    <label for="chart-axis-range-settings-x-to">{{'chart-axis-range-settings-x-to'| translate}}:</label>
+                    <dx-number-box 
+                        #xAxisTo
+                        [inputAttr]="{id: 'chart-axis-range-settings-x-to'}"
+                        [value]="value.xAxis?.to"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="-1000000"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-12">
+            <fieldset>
+                <div class="form-group">
+                    <label for="chart-axis-range-settings-y-from">{{'chart-axis-range-settings-y-from' | translate}}:</label>
+                    <dx-number-box 
+                        #yAxisFrom
+                        [inputAttr]="{id: 'chart-axis-range-settings-y-from'}"
+                        [value]="value.yAxis?.from"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="-1000000"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="chart-axis-range-settings-y-to">{{'chart-axis-range-settings-y-to' | translate}}:</label>
+                    <dx-number-box 
+                        #yAxisTo
+                        [inputAttr]="{id: 'chart-axis-range-settings-y-to'}"
+                        [value]="value.yAxis?.to"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="-1000000"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-12" *ngIf="value.y2Axis">
+            <fieldset>
+                <div class="form-group">
+                    <label for="chart-axis-range-settings-y2-from">{{'chart-axis-range-settings-y2-from' | translate}}:</label>
+                    <dx-number-box 
+                        #y2AxisFrom
+                        [inputAttr]="{id: 'chart-axis-range-settings-y2-from'}"
+                        [value]="value.y2Axis?.from"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="-1000000"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="chart-axis-range-settings-y2-to">{{'chart-axis-range-settings-y2-to' | translate}}:</label>
+                    <dx-number-box 
+                        #y2AxisTo
+                        [inputAttr]="{id: 'chart-axis-range-settings-y2-to'}"
+                        [value]="value.y2Axis?.to"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="-1000000"
+                        [max]="1000000">
+                    </dx-number-box>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-12">
+            <div class="modal-footer pr-0">
+                <button class="btn btn-secondary" (click)="onCancel()">{{'Cancel' | translate}}</button>
+                <button class="btn btn-primary" (click)="onSave()">{{'Apply' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

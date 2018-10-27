@@ -1,0 +1,28 @@
+﻿<div #container>
+    <div #toolbar class="form-group" [ngClass]="{'stick-to-top': container.getBoundingClientRect().top < toolbar.getBoundingClientRect().height}">
+        <div class="row">
+            <div class="col-md-8">
+				<dx-button hint="Go to project list."
+					icon="back"
+					(onClick)="onBack()">
+	 			</dx-button>
+				<dx-button 
+                    hint="{{'Add new measurement' | translate}}"
+                    icon="add"
+                    (onClick)="onAddNewMeasurement()">
+                </dx-button>
+                <dx-button 
+                    hint="{{'Refresh grid' | translate}}"
+                    icon="refresh"
+                    (onClick)="onRefresh()">
+                </dx-button>
+            </div>
+        </div>
+    </div>	
+	<div class="row justify-content-md-center">
+		<h2>{{'Project measurements' | translate}}</h2>
+	</div>
+	<app-battery-measurement-list 
+		[dataSource]="measurements">
+	</app-battery-measurement-list>
+</div>

@@ -1,0 +1,38 @@
+﻿<!--<div *ngIf="user.isOwner" class="row justify-content-md-center">-->
+<div *ngIf="isOwner" class="row justify-content-md-center">
+	<div class="col-md-9">
+
+		<dx-tabs #apiOwnerTabs
+				 [dataSource]="ownerTabs"
+				 [selectedIndex]="0"
+				 (onItemClick)="selectOwnerTab($event)"></dx-tabs>
+
+		<div *ngIf='ownerTab == "Companies"'  style="margin-top:10px;margin-left:0px;margin-bottom:1px;margin-right:0px">
+			<app-admin-companies></app-admin-companies>
+		</div>
+		<div *ngIf='ownerTab == "Users"'  style="margin-top:10px;margin-left:0px;margin-bottom:1px;margin-right:0px">
+			<app-admin-roles #rolesCmp></app-admin-roles>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="isAdmin" class="row justify-content-md-center">
+	<div class="col-md-9">
+		<h2><span>Company:&nbsp;<span>{{companyName}}</span></span></h2>
+		<dx-tabs #apiAdminTabs
+				 [dataSource]="adminTabs"
+				 [selectedIndex]="0"
+				 (onItemClick)="selectAdminTab($event)">
+		</dx-tabs>
+
+		<div *ngIf='adminTab == "Users"' style="margin-top:10px;margin-left:0px;margin-bottom:1px;margin-right:0px">
+			<app-admin-roles></app-admin-roles>
+		</div>
+		<div *ngIf='adminTab == "Resources"' style="margin-top:10px;margin-left:0px;margin-bottom:1px;margin-right:0px">
+			<app-admin-resourceGroups></app-admin-resourceGroups>
+		</div>
+		<div *ngIf='adminTab == "Permissions"' style="margin-top:10px;margin-left:0px;margin-bottom:1px;margin-right:0px">
+			<app-admin-permissions #permissionsCmp></app-admin-permissions>
+		</div>
+	</div>
+</div>

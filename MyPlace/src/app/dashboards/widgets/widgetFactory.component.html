@@ -1,0 +1,78 @@
+<div style="border:solid;border-width:1px;border-color:lightgray;height:100%">
+	<div class="row">
+		<div class="col-md-9" style="padding-top:7px;">
+			<span style="margin-left:10px;font-size:large;">
+				{{header}}
+			</span>
+		</div>
+		<div class="col-md-3" *ngIf="isMainMenuVisible && mode=='show'">
+			<div style="margin:0px;float:right;margin-right:2px;">
+				<dx-menu #menu
+						 [dataSource]="widgetMenus"
+						 displayExpr="name"
+						 orientation="horizontal"
+						 submenuDirection="auto"
+						 [hideSubmenuOnMouseLeave]="true"
+						 (onItemClick)="itemClick($event)">
+					<div *dxTemplate="let e of 'item'">
+						<div>
+							<span [ngClass]="e.icon"></span>
+							<span *ngIf="e.items" class="glyphicon glyphicon-option-horizontal"></span> {{e.name}}
+						</div>
+					</div>
+				</dx-menu>
+			</div>
+		</div>
+		<div class="col-md-3" *ngIf="isMainMenuVisible && mode!='show'">
+			<div style="margin-top:5px;float: right;margin-right:2px;">
+				<span>
+					<dx-button icon="preferences" hint="Configure Widget."
+							   (onClick)="onConfigure($event)">
+					</dx-button>
+				</span>
+				<dx-button hint="Delete widget from this dashboard." icon="remove"
+						   (onClick)="onDelete()">
+				</dx-button>
+			</div>
+		</div>
+	</div>
+    <div #placeHolder id="placeHolder" style="z-index:0;margin:0px">
+    </div>
+</div>
+
+<!--<div style="margin-left:5px;margin-top:5px;float:right">
+    <div>
+        <span style="float:right">
+            <dx-button icon="edit" hint="modify your dashboard"
+                       (onClick)="onWidgetEdit()">
+            </dx-button>
+        </span>
+        <dx-button hint="configure widget" icon="menu"
+                   (onClick)="onMenuConfig()">
+        </dx-button>
+    </div>
+
+</div>
+<div *ngIf="isMenuVisible" style="margin-left:5px;">
+    <div>
+        <dx-button icon="preferences"
+                   type="normal"
+                   text="Configure"
+                   (onClick)="onConfigure($event)">
+        </dx-button>
+    </div>
+    <div>
+        <dx-button icon="add"
+                   type="normal"
+                   text="Copy to dashboard"
+                   (onClick)="onCopy($event)">
+        </dx-button>
+    </div>
+    <div>
+        <dx-button icon="remove"
+                   type="normal"
+                   text="Delete"
+                   (onClick)="onDelete()">
+        </dx-button>
+    </div>
+</div>-->

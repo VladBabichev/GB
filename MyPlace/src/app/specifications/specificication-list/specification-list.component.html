@@ -1,0 +1,145 @@
+<div #container>
+    <div #toolbar class="form-group" [ngClass]="{'stick-to-top': container.getBoundingClientRect().top < toolbar.getBoundingClientRect().height}">
+        <div class="row">
+            <div class="col-md-8">
+                <dx-button 
+                    hint="{{'Add new specification' | translate}}"
+                    icon="add"
+                    (onClick)="onAddNewSpecification()">
+                </dx-button>
+                <dx-button 
+                    hint="{{'Refresh grid' | translate}}"
+                    icon="refresh"
+                    (onClick)="onRefresh()">
+                </dx-button>
+            </div>
+        </div>
+    </div>
+
+    <dx-data-grid
+        [allowColumnReordering]="true"
+        [allowColumnResizing]="true"
+        [rowAlternationEnabled]="true"
+        columnResizingMode="widget"
+        noDataText="{{'dxDataGrid-noSpecificationText' | translate}}"
+        [dataSource]="dataSource"
+        [remoteOperations]="true"
+        [showRowLines]="true"
+        (onCellPrepared)="onCellPrepared($event)"
+        (onRowRemoving)="onRowRemoving($event)"
+        (onEditingStart)="onEditingStart($event)">
+        <dxo-export [enabled]="false"></dxo-export>
+
+        <dxi-column 
+            dataField="name"
+            dataType="string"
+            caption="{{'dxDataGrid-name' | translate}}"
+            [editorOptions]="{ maxLength: 256 }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="contact"
+            caption="{{'dxDataGrid-contact' | translate}}"
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="email"
+            caption="{{'dxDataGrid-email' | translate}}"
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="requestor"
+            caption="{{'dxDataGrid-requestor' | translate}}"
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="comments"
+            caption="{{'dxDataGrid-comments' | translate}}"
+            dataType="string"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            caption="{{'dxDataGrid-percentageData' | translate}}"
+            dataField="percentageData"
+            [visible]="false"
+            dataType="boolean">
+        </dxi-column>
+
+        <dxi-column 
+            caption="{{'dxDataGrid-targetCycles' | translate}}"
+            dataField="targetCycles"
+            dataType="number"
+            [editorOptions]="{ maxLength: 256, format: '#0' }">
+        </dxi-column>
+        <dxi-column 
+            caption="{{'dxDataGrid-targetTypeName' | translate}}"
+            dataField="targetTypeName"
+            dataType="string">
+        </dxi-column>
+        <dxi-column 
+            caption="{{'dxDataGrid-unit' | translate}}"
+            dataField="unit"
+            dataType="string">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [formItem]="{ visible: false }"
+            caption="{{'dxDataGrid-createdAt' | translate}}"
+            dataField="createdAt"
+            dataType="date"
+            format="shortDateShortTime"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [formItem]="{ visible: false }"
+            caption="{{'dxDataGrid-updatedAt' | translate}}"
+            dataField="updatedAt"
+            dataType="date"
+            format="shortDateShortTime"
+            width="auto">
+        </dxi-column>
+
+        <dxo-editing 
+            [allowDeleting]="true"
+            [allowUpdating]="true">
+        </dxo-editing>
+
+        <dxo-grouping [contextMenuEnabled]="true">
+        </dxo-grouping>
+
+        <dxo-group-panel [visible]="true">
+        </dxo-group-panel>
+
+        <dxo-pager [allowedPageSizes]="[10, 20, 50]"
+                   [showInfo]="true"
+                   [showNavigationButtons]="true"
+                   [showPageSizeSelector]="true"
+                   [visible]="true">
+        </dxo-pager>
+
+        <dxo-paging [enabled]="true"
+                    [pageSize]="10">
+        </dxo-paging>
+        <dxo-selection mode="single"
+                       [allowSelectAll]="false">
+        </dxo-selection>
+        <dxo-state-storing [enabled]="true"
+                           [savingTimeout]="200"
+                           storageKey="specification-list-grid-state"
+                           type="sessionStorage">
+        </dxo-state-storing>    
+    </dx-data-grid>
+</div>

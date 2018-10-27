@@ -1,0 +1,925 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{30F5A5EA-C1A4-45BD-A5A6-73665EC3885F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyPlace</RootNamespace>
+    <AssemblyName>MyPlace</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.4.0.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Purplelight.Framework.Autofac.Integration.WebApi, Version=0.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Purplelight.Framework.Autofac.Integration.WebApi.0.2.2\lib\net45\Purplelight.Framework.Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.0.0\lib\net451\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.0.0\lib\net451\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.0.0\lib\net451\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.0\lib\net451\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.5.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.5.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.5.1\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.5.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.5.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="e2e\protractor.conf.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="e2e\tsconfig.e2e.json" />
+    <Content Include="angular.json" />
+    <Content Include="package.json" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="src\app\admin\admin-routes.module.js" />
+    <Content Include="src\app\admin\admin.component.css" />
+    <Content Include="src\app\admin\admin.component.html" />
+    <Content Include="src\app\admin\admin.component.js" />
+    <Content Include="src\app\admin\admin.module.js" />
+    <Content Include="src\app\admin\companies\admin-companies.component.css" />
+    <Content Include="src\app\admin\companies\admin-companies.component.html" />
+    <Content Include="src\app\admin\companies\admin-companies.component.js" />
+    <Content Include="src\app\admin\permissions\admin-permissions.component.css" />
+    <Content Include="src\app\admin\permissions\admin-permissions.component.html" />
+    <Content Include="src\app\admin\permissions\admin-permissions.component.js" />
+    <Content Include="src\app\admin\resourceGroups\admin-resourceGroups.component.css" />
+    <Content Include="src\app\admin\resourceGroups\admin-resourceGroups.component.html" />
+    <Content Include="src\app\admin\resourceGroups\admin-resourceGroups.component.js" />
+    <Content Include="src\app\admin\roles\admin-roles.component.css" />
+    <Content Include="src\app\admin\roles\admin-roles.component.html" />
+    <Content Include="src\app\admin\roles\admin-roles.component.js" />
+    <Content Include="src\app\admin\state\admin.effects.js" />
+    <Content Include="src\app\app-routes.module.js" />
+    <Content Include="src\app\app.component.css" />
+    <Content Include="src\app\app.component.html" />
+    <Content Include="src\app\app.module.js" />
+    <Content Include="src\app\auth\acquire-password-reset\acquire-password-reset.component.css" />
+    <Content Include="src\app\auth\acquire-password-reset\acquire-password-reset.component.html" />
+    <Content Include="src\app\auth\acquire-password-reset\acquire-password-reset.component.js" />
+    <Content Include="src\app\auth\confirm-failure\confirm-failure.component.css" />
+    <Content Include="src\app\auth\confirm-failure\confirm-failure.component.html" />
+    <Content Include="src\app\auth\confirm-success\confirm-success.component.css" />
+    <Content Include="src\app\auth\confirm-success\confirm-success.component.html" />
+    <Content Include="src\app\auth\guard\auth.guard.js" />
+    <Content Include="src\app\auth\interceptor\auth-interceptor.js" />
+    <Content Include="src\app\auth\login\login.component.css" />
+    <Content Include="src\app\auth\login\login.component.html" />
+    <Content Include="src\app\auth\login\login.component.js" />
+    <Content Include="src\app\auth\logoff\logoff.component.html" />
+    <Content Include="src\app\auth\logoff\logoff.component.js" />
+    <Content Include="src\app\auth\password-reset-acquired\password-reset-acquired.component.css" />
+    <Content Include="src\app\auth\password-reset-acquired\password-reset-acquired.component.html" />
+    <Content Include="src\app\auth\reset-password-success\reset-password-success.component.css" />
+    <Content Include="src\app\auth\reset-password-success\reset-password-success.component.html" />
+    <Content Include="src\app\auth\reset-password\reset-password.component.css" />
+    <Content Include="src\app\auth\reset-password\reset-password.component.html" />
+    <Content Include="src\app\auth\reset-password\reset-password.component.js" />
+    <Content Include="src\app\auth\signup-success\signup-success.component.css" />
+    <Content Include="src\app\auth\signup-success\signup-success.component.html" />
+    <Content Include="src\app\auth\signup\signup.component.css" />
+    <Content Include="src\app\auth\signup\signup.component.html" />
+    <Content Include="src\app\auth\signup\signup.component.js" />
+    <Content Include="src\app\auth\terms-conditions\terms-conditions.component.css" />
+    <Content Include="src\app\auth\terms-conditions\terms-conditions.component.html" />
+    <Content Include="src\app\chart\aggregation-settings-editor\aggregation-settings-editor.component.css" />
+    <Content Include="src\app\chart\aggregation-settings-editor\aggregation-settings-editor.component.html" />
+    <Content Include="src\app\chart\axis-range-editor\axis-range-editor.component.css" />
+    <Content Include="src\app\chart\axis-range-editor\axis-range-editor.component.html" />
+    <Content Include="src\app\chart\chart-appearance-editor\chart-appearance-editor.component.css" />
+    <Content Include="src\app\chart\chart-appearance-editor\chart-appearance-editor.component.html" />
+    <Content Include="src\app\chart\chart-appearance-editor\chart-appearance-editor.component.js" />
+    <Content Include="src\app\chart\chart-settings-editor\chart-settings-editor.component.css" />
+    <Content Include="src\app\chart\chart-settings-editor\chart-settings-editor.component.html" />
+    <Content Include="src\app\chart\chart-user-shared-view.component.css" />
+    <Content Include="src\app\chart\chart-user-shared-view.component.html" />
+    <Content Include="src\app\chart\chart-user-shared-view.component.js" />
+    <Content Include="src\app\chart\chart-view.component.css" />
+    <Content Include="src\app\chart\chart-view.component.html" />
+    <Content Include="src\app\chart\chart-view.component.js" />
+    <Content Include="src\app\chart\chartjs-view.component.html" />
+    <Content Include="src\app\chart\chartjs-view.component.js" />
+    <Content Include="src\app\chart\chart\chart.component.css" />
+    <Content Include="src\app\chart\chart\chart.component.html" />
+    <Content Include="src\app\chart\chart\chart.component.js" />
+    <Content Include="src\app\chart\chart\chartjs.component.html" />
+    <Content Include="src\app\chart\custom-template-editor\create\custom-template-create-dialog.component.css" />
+    <Content Include="src\app\chart\custom-template-editor\create\custom-template-create-dialog.component.html" />
+    <Content Include="src\app\chart\custom-template-editor\create\custom-template-create-dialog.component.js" />
+    <Content Include="src\app\chart\custom-template-editor\custom-template-editor.component.css" />
+    <Content Include="src\app\chart\custom-template-editor\custom-template-editor.component.html" />
+    <Content Include="src\app\chart\custom-template-editor\edit\custom-template-edit.component.css" />
+    <Content Include="src\app\chart\custom-template-editor\edit\custom-template-edit.component.html" />
+    <Content Include="src\app\chart\filter-editor\filter-editor.component.css" />
+    <Content Include="src\app\chart\filter-editor\filter-editor.component.html" />
+    <Content Include="src\app\chart\model\chart-plot-settings.js" />
+    <Content Include="src\app\chart\model\chart.js" />
+    <Content Include="src\app\chart\plot-editor\plot-editor.component.css" />
+    <Content Include="src\app\chart\plot-editor\plot-editor.component.html" />
+    <Content Include="src\app\chart\plot-editor\plot-editor.component.js" />
+    <Content Include="src\app\chart\plot-template-editor\plot-template-editor.component.css" />
+    <Content Include="src\app\chart\plot-template-editor\plot-template-editor.component.html" />
+    <Content Include="src\app\chart\plot-template-editor\plot-template-editor.component.js" />
+    <Content Include="src\app\chart\plot-type-selector\plot-type-selector.component.css" />
+    <Content Include="src\app\chart\plot-type-selector\plot-type-selector.component.html" />
+    <Content Include="src\app\chart\series-editor\series-editor.component.css" />
+    <Content Include="src\app\chart\series-editor\series-editor.component.html" />
+    <Content Include="src\app\chart\share-instance-editor\share-instance-editor.component.css" />
+    <Content Include="src\app\chart\share-instance-editor\share-instance-editor.component.html" />
+    <Content Include="src\app\chart\share-instance-editor\share-instance-editor.component.js" />
+    <Content Include="src\app\chart\stateof-charge-editor\stateof-charge-editor.component.css" />
+    <Content Include="src\app\chart\stateof-charge-editor\stateof-charge-editor.component.html" />
+    <Content Include="src\app\chart\state\chart.effects.js" />
+    <Content Include="src\app\chart\state\chart.service.js" />
+    <Content Include="src\app\chart\uom-settings-editor\uom-settings-editor.component.css" />
+    <Content Include="src\app\chart\uom-settings-editor\uom-settings-editor.component.html" />
+    <Content Include="src\app\dashboards\dashboard-detail.component.css" />
+    <Content Include="src\app\dashboards\dashboard-detail.component.html" />
+    <Content Include="src\app\dashboards\dashboard-detail.component.js" />
+    <Content Include="src\app\dashboards\dashboard-widgets.component.css" />
+    <Content Include="src\app\dashboards\dashboard-widgets.component.html" />
+    <Content Include="src\app\dashboards\dashboard-widgets.component.js" />
+    <Content Include="src\app\dashboards\dashboards.component.css" />
+    <Content Include="src\app\dashboards\dashboards.component.html" />
+    <Content Include="src\app\dashboards\dashboards.component.js" />
+    <Content Include="src\app\dashboards\model\constants.js" />
+    <Content Include="src\app\dashboards\model\interfaces.js" />
+    <Content Include="src\app\dashboards\model\widgetInjection.js" />
+    <Content Include="src\app\dashboards\services\dashboard.service.js" />
+    <Content Include="src\app\dashboards\services\widgetComponents.service.js" />
+    <Content Include="src\app\dashboards\state\dashboard.actions.js" />
+    <Content Include="src\app\dashboards\state\dashboard.reducers.js" />
+    <Content Include="src\app\dashboards\state\dashboard.state.js" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryCharge.component.css" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryCharge.component.html" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryCharge.component.js" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryChargeConfig.component.css" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryChargeConfig.component.html" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryChargeConfig.component.js" />
+    <Content Include="src\app\dashboards\widgets\calendar\calendar.component.css" />
+    <Content Include="src\app\dashboards\widgets\calendar\calendar.component.html" />
+    <Content Include="src\app\dashboards\widgets\calendar\calendar.component.js" />
+    <Content Include="src\app\dashboards\widgets\device-status\device-status.component.css" />
+    <Content Include="src\app\dashboards\widgets\device-status\device-status.component.html" />
+    <Content Include="src\app\dashboards\widgets\device-status\device-status.component.js" />
+    <Content Include="src\app\dashboards\widgets\markdown\markdown.component.css" />
+    <Content Include="src\app\dashboards\widgets\markdown\markdown.component.html" />
+    <Content Include="src\app\dashboards\widgets\markdown\markdown.component.js" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-grid.component.css" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-grid.component.html" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-grid.component.js" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-widget.component.css" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-widget.component.html" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-widget.component.js" />
+    <Content Include="src\app\dashboards\widgets\welcome\welcome.component.css" />
+    <Content Include="src\app\dashboards\widgets\welcome\welcome.component.html" />
+    <Content Include="src\app\dashboards\widgets\welcome\welcome.component.js" />
+    <Content Include="src\app\dashboards\widgets\widget-base.js" />
+    <Content Include="src\app\dashboards\widgets\widget-config.component.css" />
+    <Content Include="src\app\dashboards\widgets\widget-config.component.html" />
+    <Content Include="src\app\dashboards\widgets\widget-config.component.js" />
+    <Content Include="src\app\dashboards\widgets\widget-detail.component.js" />
+    <Content Include="src\app\dashboards\widgets\widget-edit.component.js" />
+    <Content Include="src\app\dashboards\widgets\widget-view.component.css" />
+    <Content Include="src\app\dashboards\widgets\widget-view.component.html" />
+    <Content Include="src\app\dashboards\widgets\widget-view.component.js" />
+    <Content Include="src\app\dashboards\widgets\widget.component.css" />
+    <Content Include="src\app\dashboards\widgets\widget.component.html" />
+    <Content Include="src\app\dashboards\widgets\widget.component.js" />
+    <Content Include="src\app\dashboards\widgets\widgetContainer.component.css" />
+    <Content Include="src\app\dashboards\widgets\widgetContainer.component.html" />
+    <Content Include="src\app\dashboards\widgets\widgetContainer.component.js" />
+    <Content Include="src\app\dashboards\widgets\widgetFactory.component.css" />
+    <Content Include="src\app\dashboards\widgets\widgetFactory.component.html" />
+    <Content Include="src\app\dashboards\widgets\widgetFactory.component.js" />
+    <Content Include="src\app\devices\devices.component.css" />
+    <Content Include="src\app\devices\devices.component.html" />
+    <Content Include="src\app\diagnostics\diagnostic-process.component.css" />
+    <Content Include="src\app\diagnostics\diagnostic-process.component.html" />
+    <Content Include="src\app\feedback\feedback.component.css" />
+    <Content Include="src\app\feedback\feedback.component.html" />
+    <Content Include="src\app\feedback\feedback.component.js" />
+    <Content Include="src\app\feedback\state\feedback.reducer.js" />
+    <Content Include="src\app\layouts\auth\auth-layout.component.css" />
+    <Content Include="src\app\layouts\auth\auth-layout.component.html" />
+    <Content Include="src\app\layouts\main\main-layout.component.css" />
+    <Content Include="src\app\layouts\main\main-layout.component.html" />
+    <Content Include="src\app\layouts\main\main-layout.component.js" />
+    <Content Include="src\app\measurement\measurement-detail\measurement-detail.component.css" />
+    <Content Include="src\app\measurement\measurement-detail\measurement-detail.component.html" />
+    <Content Include="src\app\measurement\measurement-list\measurement-list.component.css" />
+    <Content Include="src\app\measurement\measurement-list\measurement-list.component.html" />
+    <Content Include="src\app\measurement\measurement-specification-modal\measurement-specification-modal.component.css" />
+    <Content Include="src\app\measurement\measurement-specification-modal\measurement-specification-modal.component.html" />
+    <Content Include="src\app\measurement\measurement.component.css" />
+    <Content Include="src\app\measurement\measurement.component.html" />
+    <Content Include="src\app\preferences\preferences.component.css" />
+    <Content Include="src\app\preferences\preferences.component.html" />
+    <Content Include="src\app\preferences\preferences.component.js" />
+    <Content Include="src\app\preferences\state\preferences.effects.js" />
+    <Content Include="src\app\projects\project-detail\project-detail.component.css" />
+    <Content Include="src\app\projects\project-detail\project-detail.component.html" />
+    <Content Include="src\app\projects\project-detail\project-detail.component.js" />
+    <Content Include="src\app\projects\project-list.component.css" />
+    <Content Include="src\app\projects\project-list.component.html" />
+    <Content Include="src\app\projects\project-list.component.js" />
+    <Content Include="src\app\projects\state\upload.effects.js" />
+    <Content Include="src\app\shared\dropdown-box\dropdown-box.component.css" />
+    <Content Include="src\app\shared\dropdown-box\dropdown-box.component.html" />
+    <Content Include="src\app\shared\modal\modal.component.css" />
+    <Content Include="src\app\shared\modal\modal.component.html" />
+    <Content Include="src\app\shared\popup\confirm-popup.component.html" />
+    <Content Include="src\app\shared\project-legend\project-legend.component.css" />
+    <Content Include="src\app\shared\project-legend\project-legend.component.html" />
+    <Content Include="src\app\specifications\specification-detail\specification-detail.component.css" />
+    <Content Include="src\app\specifications\specification-detail\specification-detail.component.html" />
+    <Content Include="src\app\specifications\specification-detail\specification-expectation-modal\specification-expectation-modal.component.css" />
+    <Content Include="src\app\specifications\specification-detail\specification-expectation-modal\specification-expectation-modal.component.html" />
+    <Content Include="src\app\specifications\specifications.component.css" />
+    <Content Include="src\app\specifications\specifications.component.html" />
+    <Content Include="src\app\specifications\specificication-list\specification-list.component.css" />
+    <Content Include="src\app\specifications\specificication-list\specification-list.component.html" />
+    <Content Include="src\app\state\app.effects.js" />
+    <Content Include="src\app\state\app.reducers.js" />
+    <Content Include="src\app\state\app.state.js" />
+    <Content Include="src\app\state\index.js" />
+    <Content Include="src\app\statistic-project\state\statistic-stitcher.effects.js" />
+    <Content Include="src\app\statistic-project\statistic-project.component.css" />
+    <Content Include="src\app\statistic-project\statistic-project.component.html" />
+    <Content Include="src\app\statistic-project\statistic-project.component.js" />
+    <Content Include="src\app\stitcher\state\stitcher.effects.js" />
+    <Content Include="src\app\stitcher\stitcher.component.css" />
+    <Content Include="src\app\stitcher\stitcher.component.html" />
+    <Content Include="src\app\stitcher\stitcher.component.js" />
+    <Content Include="src\app\views\user-shared\user-shared-view.component.css" />
+    <Content Include="src\app\views\user-shared\user-shared-view.component.html" />
+    <Content Include="src\app\views\user-shared\user-shared-view.component.js" />
+    <Content Include="src\app\views\view-list.component.css" />
+    <Content Include="src\app\views\view-list.component.html" />
+    <Content Include="src\app\views\view-list.component.js" />
+    <Content Include="src\app\view\state\view.effects.js" />
+    <Content Include="src\app\view\view.component.css" />
+    <Content Include="src\app\view\view.component.html" />
+    <Content Include="src\app\view\view.component.js" />
+    <Content Include="src\assets\dx.darkmoon.css" />
+    <Content Include="src\assets\dx.darkviolet.css" />
+    <Content Include="src\assets\img\alert-icon.svg" />
+    <Content Include="src\assets\img\batteryCharge.png" />
+    <Content Include="src\assets\img\brand.png" />
+    <Content Include="src\assets\img\config.png" />
+    <Content Include="src\assets\img\generic-contrast.svg" />
+    <Content Include="src\assets\img\generic-dark-compact.svg" />
+    <Content Include="src\assets\img\generic-dark.svg" />
+    <Content Include="src\assets\img\generic-darkmoon.svg" />
+    <Content Include="src\assets\img\generic-darkviolet.svg" />
+    <Content Include="src\assets\img\generic-greenmist.svg" />
+    <Content Include="src\assets\img\generic-light-compact.svg" />
+    <Content Include="src\assets\img\generic-light.svg" />
+    <Content Include="src\assets\img\generic-softblue.svg" />
+    <Content Include="src\assets\img\logo-sm.png" />
+    <Content Include="src\assets\img\logo.png" />
+    <Content Include="src\assets\img\markDown.png" />
+    <Content Include="src\assets\img\widget1.png" />
+    <Content Include="src\assets\img\widget1.svg" />
+    <Content Include="src\assets\img\widget2.png" />
+    <Content Include="src\assets\img\widget2.svg" />
+    <Content Include="src\assets\img\widget3.png" />
+    <Content Include="src\assets\img\widgetCalendar.png" />
+    <Content Include="src\assets\img\widgetProject.png" />
+    <Content Include="src\assets\img\widgett1.svg" />
+    <Content Include="src\assets\img\widgte1.svg" />
+    <Content Include="src\favicon.ico" />
+    <Content Include="src\index.html" />
+    <Content Include="src\main.js" />
+    <Content Include="src\styles.css" />
+    <Content Include="src\vendor\CanvasJS.js" />
+    <Content Include="src\vendor\canvasjs.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="src\.vscode\settings.json" />
+    <Content Include="src\app\admin\admin-routes.module.js.map" />
+    <Content Include="src\app\admin\admin.component.js.map" />
+    <Content Include="src\app\admin\admin.module.js.map" />
+    <Content Include="src\app\admin\companies\admin-companies.component.js.map" />
+    <Content Include="src\app\admin\permissions\admin-permissions.component.js.map" />
+    <Content Include="src\app\admin\resourceGroups\admin-resourceGroups.component.js.map" />
+    <Content Include="src\app\admin\roles\admin-roles.component.js.map" />
+    <Content Include="src\app\admin\state\admin.effects.js.map" />
+    <Content Include="src\app\app-routes.module.js.map" />
+    <Content Include="src\app\app.module.js.map" />
+    <Content Include="src\app\auth\acquire-password-reset\acquire-password-reset.component.js.map" />
+    <Content Include="src\app\auth\guard\auth.guard.js.map" />
+    <Content Include="src\app\auth\interceptor\auth-interceptor.js.map" />
+    <Content Include="src\app\auth\login\login.component.js.map" />
+    <Content Include="src\app\auth\logoff\logoff.component.js.map" />
+    <Content Include="src\app\auth\reset-password\reset-password.component.js.map" />
+    <Content Include="src\app\auth\signup\signup.component.js.map" />
+    <Content Include="src\app\chart\chart-user-shared-view.component.js.map" />
+    <Content Include="src\app\chart\chart-view.component.js.map" />
+    <Content Include="src\app\chart\chartjs-view.component.js.map" />
+    <Content Include="src\app\chart\chart\chart.component.js.map" />
+    <Content Include="src\app\chart\custom-template-editor\create\custom-template-create-dialog.component.js.map" />
+    <Content Include="src\app\chart\plot-editor\plot-editor.component.js.map" />
+    <Content Include="src\app\chart\plot-template-editor\plot-template-editor.component.js.map" />
+    <Content Include="src\app\chart\share-instance-editor\share-instance-editor.component.js.map" />
+    <Content Include="src\app\chart\state\chart.effects.js.map" />
+    <Content Include="src\app\chart\state\chart.service.js.map" />
+    <Content Include="src\app\dashboards\dashboard-detail.component.js.map" />
+    <Content Include="src\app\dashboards\dashboard-widgets.component.js.map" />
+    <Content Include="src\app\dashboards\dashboards.component.js.map" />
+    <Content Include="src\app\dashboards\model\constants.js.map" />
+    <Content Include="src\app\dashboards\model\interfaces.js.map" />
+    <Content Include="src\app\dashboards\model\widgetInjection.js.map" />
+    <Content Include="src\app\dashboards\services\dashboard.service.js.map" />
+    <Content Include="src\app\dashboards\services\widgetComponents.service.js.map" />
+    <Content Include="src\app\dashboards\state\dashboard.actions.js.map" />
+    <Content Include="src\app\dashboards\state\dashboard.reducers.js.map" />
+    <Content Include="src\app\dashboards\state\dashboard.state.js.map" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryCharge.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\batteryCharge\batteryChargeConfig.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\calendar\calendar.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\device-status\device-status.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\markdown\markdown.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-grid.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\projects-grid\projects-widget.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\welcome\welcome.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widget-base.js.map" />
+    <Content Include="src\app\dashboards\widgets\widget-config.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widget-detail.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widget-edit.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widget-view.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widget.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widgetContainer.component.js.map" />
+    <Content Include="src\app\dashboards\widgets\widgetFactory.component.js.map" />
+    <Content Include="src\app\feedback\feedback.component.js.map" />
+    <Content Include="src\app\feedback\state\feedback.reducer.js.map" />
+    <Content Include="src\app\layouts\main\main-layout.component.js.map" />
+    <Content Include="src\app\preferences\preferences.component.js.map" />
+    <Content Include="src\app\preferences\state\preferences.effects.js.map" />
+    <Content Include="src\app\projects\project-detail\project-detail.component.js.map" />
+    <Content Include="src\app\projects\project-list.component.js.map" />
+    <Content Include="src\app\projects\state\upload.effects.js.map" />
+    <Content Include="src\app\state\app.effects.js.map" />
+    <Content Include="src\app\state\app.reducers.js.map" />
+    <Content Include="src\app\state\app.state.js.map" />
+    <Content Include="src\app\state\index.js.map" />
+    <Content Include="src\app\statistic-project\state\statistic-stitcher.effects.js.map" />
+    <Content Include="src\app\statistic-project\statistic-project.component.js.map" />
+    <Content Include="src\app\stitcher\state\stitcher.effects.js.map" />
+    <Content Include="src\app\stitcher\stitcher.component.js.map" />
+    <Content Include="src\app\views\user-shared\user-shared-view.component.js.map" />
+    <Content Include="src\app\views\view-list.component.js.map" />
+    <Content Include="src\app\view\state\view.effects.js.map" />
+    <Content Include="src\app\view\view.component.js.map" />
+    <Content Include="src\assets\.gitkeep" />
+    <Content Include="src\assets\icons\dxicons.ttf" />
+    <Content Include="src\assets\icons\dxicons.woff" />
+    <Content Include="src\assets\icons\dxiconsios.ttf" />
+    <Content Include="src\assets\icons\dxiconsios.woff" />
+    <Content Include="src\assets\localization\de-extended.json" />
+    <Content Include="src\assets\localization\de.json" />
+    <Content Include="src\assets\localization\en-extended.json" />
+    <Content Include="src\assets\localization\en.json" />
+    <Content Include="src\assets\localization\ru-extended.json" />
+    <Content Include="src\assets\localization\ru.json" />
+    <Content Include="src\assets\localization\zh-extended.json" />
+    <Content Include="src\assets\localization\zh.json" />
+    <Content Include="src\assets\scss\bootstrap.dark.scss" />
+    <Content Include="src\assets\scss\bootstrap.light.scss" />
+    <Content Include="src\assets\scss\bootstrap.scss" />
+    <Content Include="src\assets\scss\starup.scss" />
+    <Content Include="src\main.js.map" />
+    <Content Include="src\tsconfig.app.json" />
+    <Content Include="src\tsconfig.spec.json" />
+    <Content Include="tsconfig.json" />
+    <Content Include="tslint.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DB\db.csproj">
+      <Project>{03af048b-ae0a-438a-9c91-2b9e9d70806c}</Project>
+      <Name>Layout</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="e2e\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\app.po.ts" />
+    <TypeScriptCompile Include="e2e\src\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\src\app.po.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin-routes.module.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.module.ts" />
+    <TypeScriptCompile Include="src\app\admin\admin.service.ts" />
+    <TypeScriptCompile Include="src\app\admin\companies\admin-companies.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\model\interfaces.ts" />
+    <TypeScriptCompile Include="src\app\admin\permissions\admin-permissions.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\resourceGroups\admin-resourceGroups.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\roles\admin-roles.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\state\admin.actions.ts" />
+    <TypeScriptCompile Include="src\app\admin\state\admin.effects.ts" />
+    <TypeScriptCompile Include="src\app\admin\state\admin.reducers.ts" />
+    <TypeScriptCompile Include="src\app\admin\state\admin.state.ts" />
+    <TypeScriptCompile Include="src\app\app-routes.module.ts" />
+    <TypeScriptCompile Include="src\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\app.component.ts" />
+    <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\auth\acquire-password-reset\acquire-password-reset.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\confirm-failure\confirm-failure.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\confirm-success\confirm-success.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\guard\auth.guard.ts" />
+    <TypeScriptCompile Include="src\app\auth\interceptor\auth-interceptor.ts" />
+    <TypeScriptCompile Include="src\app\auth\login\login.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\logoff\logoff.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\password-reset-acquired\password-reset-acquired.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\reset-password-success\reset-password-success.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\reset-password\reset-password.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\shared\equals.validator.ts" />
+    <TypeScriptCompile Include="src\app\auth\shared\password.validator.ts" />
+    <TypeScriptCompile Include="src\app\auth\signup-success\signup-success.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\signup\signup.component.ts" />
+    <TypeScriptCompile Include="src\app\auth\state\auth.actions.ts" />
+    <TypeScriptCompile Include="src\app\auth\state\auth.effects.ts" />
+    <TypeScriptCompile Include="src\app\auth\state\auth.reducers.ts" />
+    <TypeScriptCompile Include="src\app\auth\state\auth.service.ts" />
+    <TypeScriptCompile Include="src\app\auth\state\auth.state.ts" />
+    <TypeScriptCompile Include="src\app\auth\terms-conditions\terms-conditions.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\aggregation-settings-editor\aggregation-settings-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\axis-range-editor\axis-range-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chart-appearance-editor\chart-appearance-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chart-settings-editor\chart-settings-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chart-user-shared-view.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chart-view.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chartjs-view.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chart\chart.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\chart\chartjs.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\custom-template-editor\create\custom-template-create-dialog.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\custom-template-editor\custom-template-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\custom-template-editor\edit\custom-template-edit.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\filter-editor\filter-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\aggregation-settings.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\chart-filter.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\chart-plot-settings.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\chart-settings.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\chart-uom-settings.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\chart.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\index.ts" />
+    <TypeScriptCompile Include="src\app\chart\model\share-settings.ts" />
+    <TypeScriptCompile Include="src\app\chart\plot-editor\plot-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\plot-template-editor\plot-template-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\plot-type-selector\plot-type-selector.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\series-editor\series-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\service\pager-service.ts" />
+    <TypeScriptCompile Include="src\app\chart\share-instance-editor\share-instance-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\stateof-charge-editor\stateof-charge-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\chart\state\chart.actions.ts" />
+    <TypeScriptCompile Include="src\app\chart\state\chart.effects.ts" />
+    <TypeScriptCompile Include="src\app\chart\state\chart.reducers.ts" />
+    <TypeScriptCompile Include="src\app\chart\state\chart.service.ts" />
+    <TypeScriptCompile Include="src\app\chart\state\chart.state.ts" />
+    <TypeScriptCompile Include="src\app\chart\uom-settings-editor\uom-settings-editor.component.ts" />
+    <TypeScriptCompile Include="src\app\core\localization-base.component.ts" />
+    <TypeScriptCompile Include="src\app\core\pipes\translation.pipe.ts" />
+    <TypeScriptCompile Include="src\app\core\providers\application-startup.provider.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\dashboard-detail.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\dashboard-widgets.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\dashboards.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\model\constants.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\model\interfaces.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\model\widgetInjection.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\services\dashboard.service.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\services\widgetComponents.service.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\state\dashboard.actions.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\state\dashboard.reducers.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\state\dashboard.state.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\batteryCharge\batteryCharge.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\batteryCharge\batteryChargeConfig.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\calendar\calendar.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\device-status\device-status.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\markdown\markdown.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\projects-grid\projects-grid.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\projects-grid\projects-widget.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\welcome\welcome.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\widget-base.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\widget-config.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\widget-view.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\widget.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\widgetContainer.component.ts" />
+    <TypeScriptCompile Include="src\app\dashboards\widgets\widgetFactory.component.ts" />
+    <TypeScriptCompile Include="src\app\devices\devices.component.ts" />
+    <TypeScriptCompile Include="src\app\devices\model\devices-params.ts" />
+    <TypeScriptCompile Include="src\app\devices\state\devices.service.ts" />
+    <TypeScriptCompile Include="src\app\diagnostics\diagnostic-process.component.ts" />
+    <TypeScriptCompile Include="src\app\feedback\feedback.component.ts" />
+    <TypeScriptCompile Include="src\app\feedback\state\feedback.actions.ts" />
+    <TypeScriptCompile Include="src\app\feedback\state\feedback.effects.ts" />
+    <TypeScriptCompile Include="src\app\feedback\state\feedback.reducer.ts" />
+    <TypeScriptCompile Include="src\app\feedback\state\feedback.service.ts" />
+    <TypeScriptCompile Include="src\app\feedback\state\feedback.state.ts" />
+    <TypeScriptCompile Include="src\app\layouts\auth\auth-layout.component.ts" />
+    <TypeScriptCompile Include="src\app\layouts\main\main-layout.component.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement-detail\measurement-detail.component.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement-detail\measurement-detail.resolver.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement-list\measurement-list.component.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement-routes.module.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement-specification-modal\measurement-specification-modal.component.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement.component.ts" />
+    <TypeScriptCompile Include="src\app\measurement\measurement.module.ts" />
+    <TypeScriptCompile Include="src\app\measurement\model\measurement.ts" />
+    <TypeScriptCompile Include="src\app\measurement\state\measurement.service.ts" />
+    <TypeScriptCompile Include="src\app\preferences\model\preferences.model.ts" />
+    <TypeScriptCompile Include="src\app\preferences\preferences.component.ts" />
+    <TypeScriptCompile Include="src\app\preferences\state\preferences.actions.ts" />
+    <TypeScriptCompile Include="src\app\preferences\state\preferences.effects.ts" />
+    <TypeScriptCompile Include="src\app\preferences\state\preferences.reducer.ts" />
+    <TypeScriptCompile Include="src\app\preferences\state\preferences.service.ts" />
+    <TypeScriptCompile Include="src\app\preferences\state\preferences.state.ts" />
+    <TypeScriptCompile Include="src\app\projects\model\project-list-item.ts" />
+    <TypeScriptCompile Include="src\app\projects\model\project.ts" />
+    <TypeScriptCompile Include="src\app\projects\project-detail\project-detail.component.spec.ts" />
+    <TypeScriptCompile Include="src\app\projects\project-detail\project-detail.component.ts" />
+    <TypeScriptCompile Include="src\app\projects\project-list.component.ts" />
+    <TypeScriptCompile Include="src\app\projects\state\upload.actions.ts" />
+    <TypeScriptCompile Include="src\app\projects\state\upload.effects.ts" />
+    <TypeScriptCompile Include="src\app\projects\state\upload.reducers.ts" />
+    <TypeScriptCompile Include="src\app\projects\state\upload.service.ts" />
+    <TypeScriptCompile Include="src\app\projects\state\upload.state.ts" />
+    <TypeScriptCompile Include="src\app\project\state\project.actions.ts" />
+    <TypeScriptCompile Include="src\app\project\state\project.reducer.ts" />
+    <TypeScriptCompile Include="src\app\project\state\project.service.ts" />
+    <TypeScriptCompile Include="src\app\project\state\project.state.ts" />
+    <TypeScriptCompile Include="src\app\shared\dropdown-box\dropdown-box.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\errorMessages.ts" />
+    <TypeScriptCompile Include="src\app\shared\modal\modal.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\model\file.blob.ts" />
+    <TypeScriptCompile Include="src\app\shared\model\project.ts" />
+    <TypeScriptCompile Include="src\app\shared\popup\confirm-popup.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\popup\popup.service.ts" />
+    <TypeScriptCompile Include="src\app\shared\project-legend\project-legend.component.ts" />
+    <TypeScriptCompile Include="src\app\shared\services\specification.service.ts" />
+    <TypeScriptCompile Include="src\app\shared\shared.module.ts" />
+    <TypeScriptCompile Include="src\app\shared\utils.ts" />
+    <TypeScriptCompile Include="src\app\specifications\model\interfaces.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specification-detail\specification-detail.component.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specification-detail\specification-detail.resolver.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specification-detail\specification-expectation-modal\specification-expectation-modal.component.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specifications-routes.module.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specifications.component.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specifications.module.ts" />
+    <TypeScriptCompile Include="src\app\specifications\specificication-list\specification-list.component.ts" />
+    <TypeScriptCompile Include="src\app\state\app.effects.ts" />
+    <TypeScriptCompile Include="src\app\state\app.reducers.ts" />
+    <TypeScriptCompile Include="src\app\state\app.state.ts" />
+    <TypeScriptCompile Include="src\app\state\index.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\model\statistic-project-params.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\state\statistic-stitcher.actions.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\state\statistic-stitcher.effects.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\state\statistic-stitcher.reducer.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\state\statistic-stitcher.service.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\state\statistic-stitcher.state.ts" />
+    <TypeScriptCompile Include="src\app\statistic-project\statistic-project.component.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\model\stitch-projects-params.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\state\stitcher.actions.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\state\stitcher.effects.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\state\stitcher.reducer.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\state\stitcher.service.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\state\stitcher.state.ts" />
+    <TypeScriptCompile Include="src\app\stitcher\stitcher.component.ts" />
+    <TypeScriptCompile Include="src\app\views\model\view-list-item.ts" />
+    <TypeScriptCompile Include="src\app\views\user-shared\user-shared-view.component.ts" />
+    <TypeScriptCompile Include="src\app\views\view-list.component.ts" />
+    <TypeScriptCompile Include="src\app\view\model\view-projects-params.ts" />
+    <TypeScriptCompile Include="src\app\view\state\view.actions.ts" />
+    <TypeScriptCompile Include="src\app\view\state\view.effects.ts" />
+    <TypeScriptCompile Include="src\app\view\state\view.reducer.ts" />
+    <TypeScriptCompile Include="src\app\view\state\view.service.ts" />
+    <TypeScriptCompile Include="src\app\view\state\view.state.ts" />
+    <TypeScriptCompile Include="src\app\view\view.component.ts" />
+    <TypeScriptCompile Include="src\environments\environment.default.ts" />
+    <TypeScriptCompile Include="src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="src\environments\environment.ts" />
+    <TypeScriptCompile Include="src\main.ts" />
+    <TypeScriptCompile Include="src\polyfills.ts" />
+    <TypeScriptCompile Include="src\test.ts" />
+    <TypeScriptCompile Include="src\typings.d.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50615</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50615/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

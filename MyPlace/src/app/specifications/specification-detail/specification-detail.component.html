@@ -1,0 +1,158 @@
+<div class="row justify-content-md-center">
+    <div class="col-md-offset-3 col-md-6">
+		<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+			<div class="form-group">
+				<label for="name">{{'specification-name' | translate}}:</label>
+				<dx-text-box 
+					formControlName="name"
+					[inputAttr]="{id: 'name'}">
+				</dx-text-box>
+				<div class="alert alert-danger"
+					 *ngIf="!validateControl('name') && form.get('name').hasError('required')">
+					{{'validation-specification-name-required' | translate}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="contact">{{'specification-contact-name' | translate}}:</label>
+				<dx-text-box 
+					formControlName="contact"
+					[inputAttr]="{id: 'contact'}">
+				</dx-text-box>
+				<div class="alert alert-danger"
+					 *ngIf="!validateControl('contact') && form.get('contact').hasError('required')">
+					 {{'validation-specification-contact-required' | translate}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="email">{{'Email' | translate}}:</label>
+				<dx-text-box 
+					formControlName="email"
+					[inputAttr]="{id: 'email'}">
+				</dx-text-box>
+				<div class="alert alert-danger"
+					 *ngIf="!validateControl('email') && form.get('email').hasError('email')">
+					{{'Invalid e-mail address' | translate}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="requestor">{{'specification-requestor-email' | translate}}:</label>
+				<dx-text-box 
+					formControlName="requestor"
+					[inputAttr]="{id: 'requestor'}">
+				</dx-text-box>
+			</div>
+
+			<div class="form-group">
+				<label for="targetTypeId">{{'specification-argument-unit' | translate}}:</label>
+				<select #targetTypeId class="form-control dx-texteditor-input" id="targetTypeId" formControlName="targetTypeId">
+					<option *ngFor="let targetType of targetTypes" [value]="targetType.targetTypeId">{{targetType.targetTypeName | translate}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="targetCycles">{{'specification-max-targetCycles-text' | translate }}:</label>
+				<dx-number-box 
+					formControlName="targetCycles"
+					format="#0"
+					[inputAttr]="{id: 'targetCycles'}"
+					[showSpinButtons]="true"
+					[showClearButton]="true"
+					[min]="0"
+					[max]="100000">
+				</dx-number-box>
+			</div>
+			<div class="form-group">
+				<dx-check-box 
+					formControlName="percentageData"
+					(onValueChanged)="onSpecificationUnitPercentageChanged()"
+					text="{{'specification-constraints-percentage' | translate}}">
+				</dx-check-box>
+			</div>
+			<div class="form-group" *ngIf="!absoluteUnits">
+				<label for="basePercentageIndex">{{'specification-base-value-index' | translate}}</label>
+				<dx-number-box formControlName="basePercentageIndex"
+							   format="#0"
+							   [inputAttr]="{id: 'basePercentageIndex'}"
+							   [showSpinButtons]="true"
+							   [showClearButton]="true"
+							   [min]="0"
+							   [max]="100000">
+				</dx-number-box>
+			</div>
+			<div class="form-group" *ngIf="absoluteUnits">
+				<label for="unit">{{'specification-value-unit' | translate}}:</label>
+				<dx-text-box 
+					formControlName="unit"
+					[(value)]="measureUnit"
+					[inputAttr]="{id: 'unit'}">
+				</dx-text-box>
+				<div class="alert alert-danger"
+					 *ngIf="!validateControl('unit') && form.get('unit').hasError('required')">
+					{{'validation-specification-value-unit-required' | translate}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="comments">{{'Comment' | translate}}:</label>
+				<textarea formControlName="comments" id="comments" type="text" class="form-control dx-texteditor-input" rows="3"></textarea>
+			</div>
+			<div class="form-group" formArrayName="constraints">
+				<ngb-accordion activeIds="battery-specification-expected-values">
+					<ngb-panel title="{{'specification-constraints-title' | translate}}" id="battery-specification-expected-values">
+						<ng-template ngbPanelContent>
+							<div class="row">
+								<dx-data-grid 
+									noDataText="{{'dxDataGrid-noSpecificationConstrainsText' | translate}}"
+									[allowColumnReordering]="false"
+									[allowColumnResizing]="false"
+									[dataSource]="constraintItems"
+									[showRowLines]="true"
+									(onInitNewRow)="onExpectationRowInit($event)"
+									(onRowValidating)="onExpectationRowValidating($event)"
+									(onRowInserted)="onExpectationAdded($event)"
+									(onRowRemoving)="onExpectationRemoving($event)">
+									<dxo-sorting mode="none"></dxo-sorting>
+									<dxo-editing 
+										mode="cell"
+										[allowUpdating]="true"
+										[allowDeleting]="true"
+										[allowAdding]="true">
+									</dxo-editing>
+
+									<dxi-column 
+										dataField="measureIndex"
+										dataType="number"
+										[caption]="targetTypeId.options[targetTypeId.selectedIndex].text"
+										width="50%"
+										sortOrder="asc"
+										sortIndex="0">
+										
+										<dxi-validation-rule type="required"></dxi-validation-rule>
+										<dxi-validation-rule type="custom" 
+											[validationCallback]="argumentUniqueValidation" 
+											[reevaluate]="true"
+											message="Index must be unique">
+										</dxi-validation-rule>
+									</dxi-column>
+				
+									<dxi-column 
+										dataField="measureValue"
+										dataType="number"
+										width="50%"
+										[(caption)]="measureUnit">
+										<dxi-validation-rule type="required"></dxi-validation-rule>
+									</dxi-column>
+								</dx-data-grid>
+							</div>
+						</ng-template>
+					</ngb-panel>
+				</ngb-accordion>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary mr-2" type="submit">{{'Save' | translate}}</button> 
+				<button class="btn btn-secondary" type="button" (click)="onCancel()">{{'Cancel' | translate}}</button>
+			</div>
+		</form>
+    </div>
+</div>

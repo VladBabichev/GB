@@ -1,0 +1,251 @@
+﻿<div>
+    <dx-button 
+        hint="{{'Refresh grid' | translate}}"
+        icon="refresh"
+        (onClick)="onRefresh()">
+    </dx-button>
+    <dx-load-indicator  [visible]="indicatorVisible"></dx-load-indicator>
+</div>
+
+<div class="row">
+    <dx-data-grid [allowColumnReordering]="true" id="gridDevices" class="col-md-6"
+                  [allowColumnResizing]="true"
+                  columnResizingMode="widget"
+                  [dataSource]="dataSource"
+                  [showRowLines]="true"
+                  (onContentReady)="onContentReady($event)"
+                  (onSelectionChanged)="onSelectionChanged($event)">
+
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+
+        <dxi-column 
+            dataField="deviceId"
+            dataType="string"
+            [visible]="false"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="systemID"
+            dataType="string"
+            width="auto"
+            [caption]="'dxDataGrid-name' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="ipAddress"
+            dataType="string"
+            width="auto"
+            [caption]="'dxDataGrid-ipAddress' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="port"
+            dataType="string"
+            width="auto"
+            [caption]="'dxDataGrid-port' | translate">
+            caption="Port">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="measurementDate"
+            dataType="datetime"
+            format="MMM d yyyy h:m:s a"
+            width="auto"
+            [caption]="'dxDataGrid-measurementDate' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="testChannels"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-testChannels' | translate">
+        </dxi-column>
+
+        <dxo-pager [allowedPageSizes]="[10, 20, 50]"
+                   [showInfo]="true"
+                   [showNavigationButtons]="true"
+                   [showPageSizeSelector]="true"
+                   [visible]="true">
+        </dxo-pager>
+
+        <dxo-paging [enabled]="true"
+                    [pageSize]="24">
+        </dxo-paging>
+
+        <dxo-selection mode="single"
+                       [allowSelectAll]="false">
+        </dxo-selection>
+
+        <dxo-filter-row [visible]="true">
+        </dxo-filter-row>
+
+        <dxo-grouping [contextMenuEnabled]="true">
+        </dxo-grouping>
+
+        <dxo-group-panel [visible]="true">
+        </dxo-group-panel>
+
+        <dxo-search-panel [visible]="true">
+        </dxo-search-panel>
+
+        <dxo-state-storing [enabled]="true"
+                           [savingTimeout]="200"
+                           storageKey="devices-grid-state"
+                           type="sessionStorage">
+        </dxo-state-storing>
+    </dx-data-grid>
+
+    <dx-data-grid #gridChannel id="gridChannel" style="border:thin;border-color:lightgrey" class="col-md-6"
+                  [showRowLines]="true"
+                  columnResizingMode="widget"
+                  [allowColumnReordering]="true"
+                  (onCellPrepared)="onCellPrepared($event)"
+                  [dataSource]="dataSource1">
+        <dxi-column 
+            dataField="chan"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-channel' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="stat"
+            dataType="number"
+            [visible]="false"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="statName"
+            caption="Status"
+            dataType="string"
+            width="auto"
+            [caption]="'dxDataGrid-status' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="rf1"
+            dataType="number"
+            [visible]="false"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="rf1name"
+            caption="RF1"
+            dataType="string"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="rf2"
+            dataType="number"
+            [visible]="false"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="rf2name"
+            caption="RF2"
+            dataType="string"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="current"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-current' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="voltage"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-voltage' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="capacity"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-capacity' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="energy"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-energy' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="cycle"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-cycle' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="step"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-step' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="testerTime"
+            dataType="datetime"
+            format="MMM d yyyy h:m:s a"
+            width="auto"
+            [caption]="'dxDataGrid-testerTime' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="stepTime"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-stepTime' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="testTime"
+            dataType="number"
+            width="auto"
+            [caption]="'dxDataGrid-testTime' | translate">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="foreColor"
+            dataType="string"
+            [visible]="false"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="backColor"
+            dataType="string"
+            [visible]="false"
+            width="auto">
+        </dxi-column>
+
+        <dxo-paging [enabled]="true"
+                    [pageSize]="100">
+        </dxo-paging>
+
+        <dxo-filter-row [visible]="true">
+        </dxo-filter-row>
+
+        <dxo-grouping [contextMenuEnabled]="true">
+        </dxo-grouping>
+
+        <dxo-group-panel [visible]="true">
+        </dxo-group-panel>
+
+
+        <dxo-selection mode="single"
+                       [allowSelectAll]="false">
+        </dxo-selection>
+    </dx-data-grid>
+</div>

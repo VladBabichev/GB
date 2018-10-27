@@ -1,0 +1,16 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="share-email">{{'User email to share' | translate}}:</label>
+                <input id="share-email" type="text" class="form-control dx-texteditor-input" (change)="setEmail($event)">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="modal-footer pr-0">
+                <button class="btn btn-secondary" (click)="onCancel()">{{'Cancel' | translate}}</button>
+                <button class="btn btn-primary" (click)="onSave()">{{'Share' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

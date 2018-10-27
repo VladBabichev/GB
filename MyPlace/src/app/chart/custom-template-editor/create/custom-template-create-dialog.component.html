@@ -1,0 +1,38 @@
+﻿<app-modal
+    [title]="'create-template-title' | translate"
+    [activeModal]="activeModal">
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-12">
+            <form [formGroup]="newTemplateSnapshotForm" novalidate>
+                <div class="form-group">
+                    <label for="custom-template-name">{{'Template name' | translate}}:</label>
+                    <dx-text-box 
+                        formControlName="templateName"
+                        [inputAttr]="{id: 'custom-template-name'}">
+                    </dx-text-box>
+                    <div
+                        class="alert alert-danger"                  
+                        *ngIf="!validateTemplateName() && newTemplateSnapshotForm.get('templateName').hasError('required')">
+                        {{'validation-template-name-required' | translate}}
+                    </div>
+                </div>        
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal-footer eng-modal-footer">
+        <button 
+            type="button" 
+            class="btn btn-secondary" 
+            (click)="activeModal.close('CancelTemplateSaving')">
+            {{'Cancel' | translate}}
+        </button>
+        <button 
+            type="button"
+            class="btn btn-primary" 
+            (click)="onCreateTemplate()">
+            {{'Save' | translate}}
+        </button>
+    </div>
+</app-modal>

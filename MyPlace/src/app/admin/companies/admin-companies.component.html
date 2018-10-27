@@ -1,0 +1,49 @@
+﻿
+<div class="row justify-content-md-center">
+
+	<div class="col-md-12">
+		<div>
+			<div><h2>{{'Companies Administration' | translate}}</h2></div>
+			<div>
+				<dx-button 
+					hint="{{'Refresh companies' | translate}}"
+					icon="refresh"
+					(onClick)="onRefresh()">
+				</dx-button>
+			</div>
+		</div>
+
+		<dx-data-grid id="gridCompanies"
+					  [dataSource]="companies"
+					  keyExpr="companyId"
+					  (onRowRemoved)="onRowRemoved($event)"
+					  (onRowUpdated)="onRowUpdated($event)"
+					  (onRowInserted)="onRowInserted($event)"
+					  [allowColumnReordering]="false">
+
+			<dxo-editing mode="popup"
+						 [allowDeleting]="true"
+						 [allowAdding]="true"
+						 [allowUpdating]="true">
+
+				<dxo-popup 
+					[title]="'Company' | translate"
+					[closeOnOutsideClick]="true"
+					[showTitle]="true"
+					[width]="600"
+					[height]="220">
+				</dxo-popup>
+			</dxo-editing>
+			<dxi-column 
+				dataField="companyName"
+				dataType="string"
+				[caption]="'dxDataGrid-companyName' | translate">
+			</dxi-column>
+
+			<dxo-search-panel [visible]="true"></dxo-search-panel>
+			<dxo-paging [enabled]="false"></dxo-paging>
+
+			<dxo-selection mode="single" [allowSelectAll]="false"></dxo-selection>
+		</dx-data-grid>
+	</div>
+</div>

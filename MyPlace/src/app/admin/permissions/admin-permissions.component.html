@@ -1,0 +1,74 @@
+﻿
+<div class="row justify-content-md-center">
+	<div class="col-md-12">
+		<!--<div><h2>Resources Permission Administration</h2></div>-->
+		<div>
+			<dx-button 
+				hint="{{'Refresh' | translate}}"
+				icon="refresh"
+				(onClick)="onRefresh()">
+			</dx-button>
+			<span style="font-size:x-large;margin-left:15px">Resource Permissions Administration</span>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<dx-data-grid id="gridUsers"
+					  [dataSource]="users"
+					  (onSelectionChanged)="onUserSelectionChanged($event)"
+					  (onContentReady)="onContentReady($event)"
+					  [allowColumnReordering]="false">
+
+			<dxi-column 
+				dataField="userName" 
+				[allowEditing]="false"
+				dataType="string"
+				[caption]="'User' | translate">
+			</dxi-column>
+			<dxi-column 
+				dataField="email" 
+				[allowEditing]="false"
+				dataType="string"
+				[caption]="'Email' | translate">
+			</dxi-column>
+			<dxi-column 
+				dataField="roleName" 
+				[allowEditing]="false"
+				dataType="string"
+				[caption]="'Role' | translate">
+			</dxi-column>
+
+			<dxi-column dataField="userId" [visible]="false"></dxi-column>
+			<dxo-search-panel [visible]="true"></dxo-search-panel>
+			<dxo-paging [enabled]="false"></dxo-paging>
+			<dxo-selection mode="single" [allowSelectAll]="false"></dxo-selection>
+		</dx-data-grid>
+	</div>
+
+	<div class="col-md-6">
+		<dx-data-grid id="gridPermissions"
+					  [dataSource]="userPermissions"
+					  (onRowUpdated)="onPermissionRowUpdated($event)"
+					  [allowColumnReordering]="false">
+
+			<dxo-editing mode="cell" [allowUpdating]="true">
+			</dxo-editing>
+			<dxi-column dataField="resourceName" [allowEditing]="false"
+						dataType="string"
+						width="40%"
+						caption="Resource Group">
+			</dxi-column>
+			<dxi-column dataField="checked"
+						dataType="boolean"
+						caption="Select">
+			</dxi-column>
+
+			<dxi-column dataField="userid" [visible]="false"></dxi-column>
+			<dxi-column dataField="resourceGroupid" [visible]="false"></dxi-column>
+
+			<dxo-search-panel [visible]="true"></dxo-search-panel>
+			<dxo-paging [enabled]="false"></dxo-paging>
+			<dxo-selection mode="single" [allowSelectAll]="false"></dxo-selection>
+		</dx-data-grid>
+	</div>
+</div>

@@ -1,0 +1,282 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <legend>{{'chart-appearance-settings-title' | translate}}</legend>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="appearance-settings">
+                <ngb-tabset>
+                    <ngb-tab title="{{'chart-appearance-general-settings-title' | translate}}">
+
+                        <ng-template ngbTabContent>
+
+                            <form [formGroup]="chartSettingForm" novalidate>
+                                <fieldset formGroupName="common">
+                                    <legend>{{'chart-appearance-general-settings-chart-resize' | translate}}</legend>
+                                    <div class="form-group">
+                                        <label for="chart-setting-horizontal-size">{{'chart-appearance-general-settings-chart-horizontal-size' | translate}}:</label>
+                                        <dx-number-box 
+                                            [inputAttr]="{id: 'chart-setting-horizontal-size'}"
+                                            formControlName="horizontalSize"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="0"
+                                            [max]="100000">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="chart-setting-vertical-size">{{'chart-appearance-general-settings-chart-vertical-size' | translate}}:</label>
+                                        <dx-number-box 
+                                            [inputAttr]="{id: 'chart-setting-vertical-size'}"
+                                            formControlName="verticalSize"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="0"
+                                            [max]="100000">
+                                        </dx-number-box>
+                                    </div>
+                                </fieldset>
+                                <fieldset formGroupName="common">
+                                    <legend>{{'chart-appearance-general-settings-chart-gridlines' | translate}}</legend>
+                                    <div class="form-group">
+                                        <dx-check-box
+                                            formControlName="xLineVisible"
+                                            [text]="'chart-appearance-general-settings-chart-show-vertical-gridlines' | translate">
+                                        </dx-check-box>
+                                    </div>
+                                    <div class="form-group">
+                                        <dx-check-box
+                                            formControlName="yLineVisible"
+                                            [text]="'chart-appearance-general-settings-chart-show-horizontal-gridlines' | translate">
+                                        </dx-check-box>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend>{{'miscellaneous-settings' | translate}}</legend>
+                                    <fieldset formGroupName="common">
+                                        <div class="form-group">
+                                            <label for="chart-setting-point-size">{{'Point size' | translate}}:</label>
+                                            <dx-number-box
+                                                [inputAttr]="{id: 'chart-setting-point-size'}"
+                                                formControlName="pointSize"
+                                                [showSpinButtons]="true"
+                                                [showClearButton]="true"
+                                                [min]="1"
+                                                [max]="25">
+                                            </dx-number-box>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="chart-setting-line-thickness">{{'chart-appearance-miscellaneous-setting-line-thickness' | translate}}:</label>
+                                            <dx-number-box
+                                                [inputAttr]="{id: 'chart-setting-line-thickness'}"
+                                                formControlName="seriesLineThickness"
+                                                [showSpinButtons]="true"
+                                                [showClearButton]="true"
+                                                [min]="0.1"
+                                                [max]="25">
+                                            </dx-number-box>
+                                        </div>
+                                    </fieldset>
+
+                                </fieldset>
+                            </form>
+
+
+                        </ng-template>
+
+                    </ngb-tab>
+                    <ngb-tab title="{{'chart-appearance-axis-settings-title' | translate}}">
+
+                        <ng-template ngbTabContent>
+
+                            <form [formGroup]="chartSettingForm" novalidate>
+                                <fieldset formGroupName="common">
+                                    <legend>{{'X-Axis' | translate}}</legend>
+                                    <div class="form-group">
+                                        <label for="chart-setting-major-tick-interval">{{'chart-appearance-axis-settings-major-tick-interval' | translate}}:</label>
+                                        <dx-number-box 
+                                            formControlName="xMajorTickInterval"
+                                            [inputAttr]="{id: 'chart-setting-major-tick-interval'}"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="0"
+                                            [max]="1000000">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label for="chart-setting-minor-tick-count">Count of minor ticks between major:</label>
+                                        <dx-number-box 
+                                            formControlName="xMinorTickCount"
+                                            [inputAttr]="{id: 'chart-setting-minor-tick-count'}"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="1"
+                                            [max]="25">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <dx-check-box formControlName="xMinorTickVisible"
+                                                      text="Display minor ticks on argument axis">
+                                        </dx-check-box>
+                                    </div>
+                                </fieldset>
+                                <fieldset formGroupName="common">
+                                    <legend>{{'Y-Axis' | translate}}</legend>
+                                    <div class="form-group">
+                                        <label for="chart-setting-ymajor-tick-interval">{{'chart-appearance-axis-settings-major-tick-interval' | translate}}:</label>
+                                        <dx-number-box 
+                                            formControlName="yMajorTickInterval"
+                                            [inputAttr]="{id: 'chart-setting-ymajor-tick-interval'}"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="0"
+                                            [max]="1000000">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label for="chart-setting-yminor-tick-count">Count of minor ticks between major:</label>
+                                        <dx-number-box 
+                                            formControlName="yMinorTickCount"
+                                            [inputAttr]="{id: 'chart-setting-yminor-tick-count'}"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="1"
+                                            [max]="25">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <dx-check-box 
+                                            formControlName="yMinorTickVisible"
+                                            text="Display minor ticks on value axis">
+                                        </dx-check-box>
+                                    </div>
+                                </fieldset>
+                                <fieldset formGroupName="common" *ngIf="plotParameters.axisRange?.y2Axis">
+                                    <legend>{{'Y-Axis' | translate}} ({{'chart-y2Axis-text' | translate}})</legend>
+                                    <div class="form-group">
+                                        <label for="chart-setting-y2major-tick-interval">{{'chart-appearance-axis-settings-major-tick-interval' | translate}}:</label>
+                                        <dx-number-box 
+                                            formControlName="y2MajorTickInterval"
+                                            [inputAttr]="{id: 'chart-setting-y2major-tick-interval'}"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="0"
+                                            [max]="1000000">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label for="chart-setting-y2minor-tick-count">Count of minor ticks between major:</label>
+                                        <dx-number-box
+                                            formControlName="y2MinorTickCount"
+                                            [inputAttr]="{id: 'chart-setting-y2minor-tick-count'}"
+                                            [showSpinButtons]="true"
+                                            [showClearButton]="true"
+                                            [min]="1"
+                                            [max]="25">
+                                        </dx-number-box>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <dx-check-box 
+                                            formControlName="y2MinorTickVisible"
+                                            text="Display minor ticks on value axis">
+                                        </dx-check-box>
+                                    </div>
+                                </fieldset>
+
+                            </form>
+
+
+                        </ng-template>
+
+                    </ngb-tab>
+                    <ngb-tab title="{{'chart-appearance-legend-settings-title' | translate}}">
+                        <ng-template ngbTabContent>
+                            <form [formGroup]="chartSettingForm" novalidate>
+                                <fieldset formGroupName="legend">
+                                    <div class="form-group">
+                                        <label for="chart-appearance-legend-settings-position">{{'chart-appearance-legend-settings-position' | translate}}:</label>
+                                        <select 
+                                            id="chart-appearance-legend-settings-position"
+                                            formControlName="position"
+                                            class="form-control dx-texteditor-input">
+                                            <option *ngFor="let positionItem of legendPositions" [value]="positionItem.value">{{positionItem.name | translate}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="chart-appearance-legend-settings-horizontal-position">{{'chart-appearance-legend-settings-horizontal-position' | translate}}:</label>
+                                        <select 
+                                            id="chart-appearance-legend-settings-horizontal-position"
+                                            formControlName="horizontalAlignment"
+                                            class="form-control dx-texteditor-input">
+                                            <option *ngFor="let positionItem of legendHorizontalPositions" [value]="positionItem.value">{{positionItem.name | translate}}</option>
+                                        </select>
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label for="chart-appearance-legend-settings-vertical-position">{{'chart-appearance-legend-settings-vertical-position' | translate}}:</label>
+                                        <select 
+                                            id="chart-appearance-legend-settings-vertical-position"
+                                            formControlName="verticalAlignment"
+                                            class="form-control dx-texteditor-input">
+                                            <option *ngFor="let positionItem of legendVerticalPositions" [value]="positionItem.value">{{positionItem.name | translate}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <label>Orientation:</label>
+                                        <select formControlName="orientation"
+                                                class="form-control dx-texteditor-input">
+                                            <option value="vertical">Vertical</option>
+                                            <option value="horizontal">Horizontal</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="{{'chart-appearance-font-settings-title' | translate}}">
+                        <ng-template ngbTabContent>
+                            <form [formGroup]="chartSettingForm" novalidate>
+                                <div class="form-group" formGroupName="common">
+                                    <label for="chart-setting-font-family">{{'chart-appearance-font-settings-family' | translate}}:</label>
+                                    <select id="chart-setting-font-family"
+                                            formControlName="fontFamilyName"
+                                            class="form-control dx-texteditor-input">
+                                        <option value="Helvetica Neue">Helvetica Neue</option>
+                                        <option value="Helvetica">Helvetica</option>
+                                        <option value="Arial">Arial</option>
+                                        <option value="Calibri">Calibri</option>
+                                        <option value="Tahoma">Tahoma</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Segoe">Segoe</option>
+                                        <option value="Verdana">Verdana</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" formGroupName="common">
+                                    <label for="chart-setting-font-size">{{'chart-appearance-font-settings-size' | translate}}:</label>
+                                    <dx-number-box 
+                                        formControlName="fontSize"
+                                        [inputAttr]="{id: 'chart-setting-font-size'}"
+                                        [showSpinButtons]="true"
+                                        [showClearButton]="true"
+                                        [min]="8"
+                                        [max]="25"
+                                        [placeholder]="'font-size-use-automatically-calculated' | translate">
+                                    </dx-number-box>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="modal-footer">
+                <button class="btn btn-secondary" (click)="onCancel()">{{'Cancel' | translate}}</button>
+                <button class="btn btn-primary" (click)="onSave()">{{'Apply' | translate}}</button>
+            </div>
+        </div>    
+    </div>
+</div>

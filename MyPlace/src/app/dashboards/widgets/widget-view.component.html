@@ -1,0 +1,16 @@
+<dx-popup class="popup"
+          [width]="width"
+          [height]="height"
+          [showTitle]="false"
+          title=""
+            (onHiding)="popup_hiding($event)"
+          [dragEnabled]="false"
+          [closeOnOutsideClick]="true"
+          [(visible)]="popupVisible">
+    <div *dxTemplate="let data of 'content'">
+        <div #placeHolder>
+            <app-widgetFactory [widget]="widget"></app-widgetFactory>
+        </div>
+    </div>       
+</dx-popup>
+

@@ -1,0 +1,80 @@
+﻿<div class="row justify-content-md-center">
+    <!--<div class="col-md-offset-3 col-md-6">-->
+        <div >
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                <div class="form-group">
+                    <label for="name">Widget name:</label>
+                    <dx-text-box formControlName="name"
+                                 class="form-control dx-texteditor-input"
+                                 [inputAttr]="{id: 'name'}">
+                    </dx-text-box>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <dx-text-area formControlName="description" height="100px"
+                                  placeholder="Type a text here..."
+                                  [inputAttr]="{id: 'description'}"
+                                  class="form-control dx-texteditor-input">
+                    </dx-text-area>
+                </div>
+
+                <div class="form-group">
+                    <label for="componentName">Widget type:</label>
+                    <select #componenName class="form-control dx-texteditor-input" id="targetTypeId" formControlName="componentName">
+                        <option *ngFor="let widget of widgetComponents" [value]="widget.componentName">{{widget.componentName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="colsSpan">
+                        Colums span
+                    </label>
+                    <dx-number-box formControlName="colsSpan"
+                                   format="#0"
+                                   [inputAttr]="{id: 'colsSpan'}"
+                                   [showSpinButtons]="true"
+                                   [showClearButton]="true"
+                                   [min]="1"
+                                   class="form-control dx-texteditor-input"
+                                   [max]="cols">
+                    </dx-number-box>
+                </div>
+
+                <div class="form-group">
+                    <label for="rowsSpan">
+                        Rows span
+                    </label>
+                    <dx-number-box formControlName="rowsSpan"
+                                   format="#0"
+                                   [inputAttr]="{id: 'rowsSpan'}"
+                                   [showSpinButtons]="true"
+                                   [showClearButton]="true"
+                                   [min]="1"
+                                   class="form-control dx-texteditor-input"
+                                   [max]="10">
+                    </dx-number-box>
+                </div>
+
+                <div class="form-group">
+                    <label for="positionNumber">
+                        Position number
+                    </label>
+                    <dx-number-box formControlName="positionNumber"
+                                   format="#0"
+                                   [inputAttr]="{id: 'positionNumber'}"
+                                   [showSpinButtons]="true"
+                                   [showClearButton]="true"
+                                   [min]="1"
+                                   class="form-control dx-texteditor-input"
+                                   [max]="totalWidgets">
+                    </dx-number-box>
+                </div>
+
+                <!--<div class="form-group">
+                    <button class="btn btn-primary mr-2" type="submit">Save</button>
+                    <button class="btn btn-secondary" type="button" (click)="onCancel()">Cancel</button>
+                </div>-->
+            </form>
+        </div>
+    </div>

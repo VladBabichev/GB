@@ -1,0 +1,48 @@
+<div #myContainer style="border:solid;padding:5px;margin-left:0px;margin-right:0px;width:100%;">
+	<!--border-left:1px solid darkgray;-->
+	<div #myHeader style="margin-bottom:10px;">
+		<span style="font-size:x-large;margin-left:10px;">Configuration</span>
+	</div>
+
+	<form #myForm style="width:100%;margin-left:5px;border:3px solid lavender;"
+		  [formGroup]="form"
+		  (ngSubmit)="onSubmit()"
+		  novalidate>
+		<div #myDescription class="form-group">
+			<label for="description">Description:</label>
+			<dx-text-area formControlName="description" height="100px" width="100%"
+						  placeholder="Type a text here..."
+						  [inputAttr]="{id: 'description'}"
+						  class="form-control dx-texteditor-input">
+			</dx-text-area>
+		</div>
+		<div #mySize class="form-group">
+			<label for="description">Size:</label>
+			<dx-select-box [dataSource]="widgetRanges" class="dx-texteditor-input"
+						   [(value)]="widgetRange"
+						   (onValueChanged)="onRangeValueChanged($event)">
+
+			</dx-select-box>
+		</div>
+
+		<dx-scroll-view style="margin:0px;border:none;width:100%;"
+						showScrollbar="always"
+						height="200px"
+						useNative="true">
+			<!--<div>
+			<app-widgetFactory [widget]="widget"></app-widgetFactory>
+		</div>-->
+		</dx-scroll-view>
+
+		<!-- <div> -->
+		<!--<div class="form-group" style="float:right">
+		<button class="btn btn-primary mr-2" type="submit">Save</button>
+		<button class="btn btn-secondary" type="button" (click)="onClose($event)">Close</button>
+	</div>-->
+		<div #myButtons class="form-group" style="margin-left:auto;margin-right:0;width:300px;">
+			<button class="btn btn-primary mr-2" type="submit">Save</button>
+			<button class="btn btn-secondary" type="button" (click)="onClose($event)">Cancel</button>
+		</div>
+	</form>
+</div>
+

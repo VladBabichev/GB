@@ -1,0 +1,154 @@
+﻿<div class="row" style="margin:0px;margin-top:5px;padding-left:0px;">
+    
+	<!-- Widgets ==================================================================== -->
+	<div *ngIf="mode!='empty'" [class]="class" style="border:none;border-color:lavender;padding:0px;padding-top:5px;">
+        <div *ngIf="mode!='show' && mode!='config' && mode!='copy'" style="margin-left:0px;margin-top:0px;margin-bottom:10px;display: flex;justify-content: center;align-items: center;border-bottom: 1px none darkgrey;">
+            <span>
+                Add, edit, move or resize your widgets
+                <!--<button class="btn btn-primary mr-2" type="button" (onClick)="onAddWidget()">Done Editing</button>-->
+				<dx-button style="margin-left:5px;font-size:small;"
+                           text="Done Editing"
+                           type="default"
+                           (onClick)="onEndEdit($event)">
+                </dx-button>
+            </span>
+        </div>
+        <app-widgetContainer [dashboardId]="dashboardId" (editWidget)="onWidgetEdit($event)" (bubble)="onBubble($event)"></app-widgetContainer>
+    </div>
+
+
+	<!-- Add Widgets =================================================================== -->
+    <div #addWidgetsContainer *ngIf="mode=='edit'" class="col-md-3" style="border:none;border-left:1px solid darkgray;padding:5px;margin-left:0px;margin-right:0px;">
+			<div #addWidgetsHeader style="margin-bottom:0px;">
+				<span style="font-size:x-large;margin-left:10px;">Add widget</span>
+			</div>
+
+			<dx-data-grid #addWidgetsGrid style="width:100%;margin-top:0px;margin-bottom:0px;margin-left:0px;margin-right:0px;border-bottom:1px solid darkgray;"
+						  id="gridWidgets"
+						  [allowColumnReordering]="false"
+						  [allowColumnResizing]="false"
+						  [dataSource]="widgetComponents"
+						  [showRowLines]="true"
+						  [showColumnLines]="false"
+						  [showColumnHeaders]="false"
+						  [hoverStateEnabled]="true"
+						  [wordWrapEnabled]="true"
+						  (onContentReady)="onContentReady($event)"
+						  (onSelectionChanged)="onSelectionChanged($event)">
+
+				<div *dxTemplate="let data of 'cellTemplate'">
+					<img style="border:1px solid darkgray;margin:15px;margin-right:0px;"
+						 [src]="data.value" />
+				</div>
+				<div *dxTemplate="let data of 'cellTemplate2'">
+					<!--<div>
+						<dx-text-area style="border:none;"
+									  [height]="90"
+									  [maxLength]="250"
+									  [(value)]="data.value">
+						</dx-text-area>
+					</div>-->
+					<div *ngIf="isSelectedWidgetRow(data.data.componentName)" style="color:white;">
+						<div  style="font-size:large;margin-top:15px;margin-bottom:10px;">{{data.data.name}} - selected</div>
+						<div>{{data.data.description}}</div>
+					</div>
+					<div *ngIf="!isSelectedWidgetRow(data.data.componentName)">
+						<div style="font-size:large;margin-top:15px;margin-bottom:10px;">{{data.data.name}} {{data.isSelected}}</div>
+						<div>{{data.data.description}}</div>
+					</div>
+				</div>
+
+				<dxi-column dataField="pictureFile" width="130" [allowFiltering]="false" caption=""
+							[allowSorting]="false" cellTemplate="cellTemplate">
+				</dxi-column>
+				<dxi-column dataField="description" cellTemplate="cellTemplate2"
+							dataType="string"
+							width="auto"
+							caption="Name">
+				</dxi-column>
+
+				<dxi-column dataField="name"
+							dataType="string"
+							width="auto"
+							[visible]="false"
+							caption="Name">
+				</dxi-column>
+
+				<dxo-scrolling [useNative]="true">
+				</dxo-scrolling>
+
+				<dxo-pager [allowedPageSizes]="[10, 20, 50]"
+						   [showInfo]="true"
+						   [showNavigationButtons]="true"
+						   [showPageSizeSelector]="true"
+						   [visible]="false">
+				</dxo-pager>
+
+				<dxo-paging [enabled]="false"
+							[pageSize]="24">
+				</dxo-paging>
+
+				<dxo-selection mode="single"
+							   [allowSelectAll]="false">
+				</dxo-selection>
+
+				<dxo-filter-row [visible]="false">
+				</dxo-filter-row>
+
+				<dxo-grouping [contextMenuEnabled]="false">
+				</dxo-grouping>
+
+				<dxo-group-panel [visible]="false">
+				</dxo-group-panel>
+
+				<dxo-search-panel [visible]="true">
+				</dxo-search-panel>
+			</dx-data-grid>
+
+        <div #addWidgetsButton style="float:right;margin-top:5px;">
+				<dx-button style="font-size:small;"
+					   hint="Add current widget"
+                       text="Add"
+                       [disabled]="componentName == null || componentName==undefined"
+                       type="default"
+                       (onClick)="onAddWidget()">
+            </dx-button>
+        </div>
+    </div>
+
+	<!-- Empty Dahboard ================================================================= -->
+    <div *ngIf="mode=='empty'" class="row justify-content-md-center" style="margin-top:10px;">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-3" style="float:left">
+            <img class="vss-ZeroDataItem--image" alt="" src="https://cdn.vsassets.io/v/M140_20180928.1/_content/Dashboards/zerodata-no-dashboard.svg">
+        </div>
+        <div class="col-md-2">
+
+        </div>
+
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-9 justify-content-md-center" style="float:right">
+            <h1>This dashboard doesn't have widgets just yet!</h1>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-9 " style="float:right">
+            <h2>Add one or more widgets to gain visibility into your team's progress.</h2>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-9 " style="float:right;">
+            <!--<button class="btn btn-primary mr-2" type="submit"  (onClick)="onWidgetEdit($event)">Add a widget</button>-->
+            <dx-button text="Add a widget"
+                       type="default"
+                       (onClick)="onDashboardAddWidgets($event)">
+            </dx-button>
+        </div>
+    </div>
+</div>
+

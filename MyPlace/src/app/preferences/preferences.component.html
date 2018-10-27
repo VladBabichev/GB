@@ -1,0 +1,157 @@
+﻿<div class="container">
+    <div class="row">
+            <div class="col-md-12">
+				<form [formGroup]="preferencesForm" novalidate>
+					<div *ngFor="let error of (state$ | async).error?.split('<br>')" class="alert alert-danger">
+						{{error}}
+					</div>
+					<ngb-accordion activeIds="user-other-settings, user-chart-general-settings">
+						<ngb-panel title="{{'User settings' | translate}}" id="user-other-settings">
+							<ng-template ngbPanelContent>
+								<div class="row" formGroupName="otherPreferences">
+									<div class="col-md-12">
+										<div>
+											<fieldset>
+												<legend>{{'Language settings' | translate}}</legend>
+												<div class="form-group">
+													<label for="locale">{{'Current Locale' | translate}}:</label>
+													<select id="locale" formControlName="locale" class="form-control dx-texteditor-input">
+														<option *ngFor="let userLocale of userLocales" [value]="userLocale.value">{{userLocale.name}}</option>
+													</select>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div>
+											<fieldset>
+												<legend>{{'Project settings' | translate}}</legend>
+												<div class="form-group">
+													<label for="other-setting-max-projects-count">{{'Max Count of Selected Projects' | translate}}:</label>
+													<dx-number-box formControlName="maxSelectedProjectCount"
+																   [inputAttr]="{id: 'other-setting-max-projects-count'}"
+																   [showSpinButtons]="true"
+																   [showClearButton]="true"
+																   [min]="0"
+																   [max]="50">
+													</dx-number-box>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+								</div>
+							</ng-template>
+						</ngb-panel>
+						<ngb-panel title="{{'Chart general settings' | translate}}" id="user-chart-general-settings">
+							<ng-template ngbPanelContent>
+								<div class="row" formGroupName="chartPreferences">
+									<div class="col-md-12">
+										<div>
+											<fieldset>
+												<legend>{{'Data Points' | translate}}</legend>
+												<div class="form-group">
+													<label for="chart-setting-point-size">{{'Point size' | translate}}:</label>
+													<dx-number-box formControlName="pointSize"
+																   [inputAttr]="{id: 'chart-setting-point-size'}"
+																   [showSpinButtons]="true"
+																   [showClearButton]="true"
+																   [min]="1"
+																   [max]="25">
+													</dx-number-box>
+												</div>
+											</fieldset>
+										</div>
+										<div>
+											<fieldset>
+												<legend>{{'chart-appearance-general-settings-chart-gridlines' | translate}}</legend>
+												<div class="form-group">
+													<div class="checkbox">
+														<label>
+															<input formControlName="xLineVisible" type="checkbox">
+															{{'chart-appearance-general-settings-chart-show-vertical-gridlines' | translate}}
+														</label>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="checkbox">
+														<label>
+															<input formControlName="yLineVisible" type="checkbox">
+															{{'chart-appearance-general-settings-chart-show-horizontal-gridlines' | translate}}
+														</label>
+													</div>
+												</div>
+											</fieldset>
+										</div>
+										<div>
+											<fieldset>
+												<legend>{{'Legend' | translate}}</legend>
+												<div class="form-group">
+													<div class="checkbox">
+														<label>
+															<input formControlName="showLegend" type="checkbox">
+															{{'Show Legend' | translate}}
+														</label>
+													</div>
+												</div>
+											</fieldset>
+										</div>
+										<div>
+											<fieldset>
+												<legend>{{'Labels Font' | translate}}</legend>
+												<div class="form-group">
+													<label for="chart-setting-font-family">{{'chart-appearance-font-settings-family' | translate}}:</label>
+													<select id="chart-setting-font-family" formControlName="fontFamilyName" class="form-control dx-texteditor-input">
+														<option *ngFor="let fontFamilyName of chartFontFamilies" [value]="fontFamilyName">{{fontFamilyName}}</option>
+													</select>
+												</div>
+												<div class="form-group">
+													<label for="chart-setting-font-size">{{'chart-appearance-font-settings-size' | translate}}:</label>
+													<dx-number-box 
+														formControlName="fontSize"
+														[inputAttr]="{id: 'chart-setting-font-size'}"
+														[value]="fontSize"
+														[showSpinButtons]="true"
+														[showClearButton]="true"
+														[min]="8"
+														[max]="25"
+														[placeholder]="'font-size-use-automatically-calculated' | translate">
+													</dx-number-box>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+								</div>
+							</ng-template>
+						</ngb-panel>
+						<ngb-panel title="{{'Chart series color settings' | translate}}">
+							<ng-template ngbPanelContent>
+								<div class="row">
+									<div class="col">
+										<legend>{{'Series palette colors' | translate}}:</legend>
+									</div>
+								</div>
+								<div formGroupName="chartPreferences">
+									<div class="row" formArrayName="paletteColors">
+										<div class="col" *ngFor="let palette of getPaletteColorGroup(0, 12); let i = index">
+											<input [(colorPicker)]="palette.value.color" class="form-control dx-texteditor-input" [cpOKButton]="false" [style.background]="palette.value.color" [value]="i + 1" readonly="readonly" style="width: 40px; cursor: pointer; text-align: center; padding: 0" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col" *ngFor="let palette of getPaletteColorGroup(12, 24); let i = index">
+											<input [(colorPicker)]="palette.value.color" class="form-control dx-texteditor-input" [cpOKButton]="false" [style.background]="palette.value.color" [value]="i + 12 + 1" readonly="readonly" style="width: 40px; cursor: pointer; text-align: center; padding: 0" />
+										</div>
+									</div>
+								</div>
+							</ng-template>
+						</ngb-panel>
+					</ngb-accordion>
+				</form>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group pt-3">
+                    <button class="btn btn-primary mr-2" (click)="onSubmit()" [disabled]="!IsReady">{{'dxDataGrid-editingSaveRowChanges' | translate}}</button>
+					<button class="btn btn-secondary" type="button" (click)="onCancel()">{{'Cancel' | translate}}</button>
+                </div>
+            </div>
+    </div>
+</div>

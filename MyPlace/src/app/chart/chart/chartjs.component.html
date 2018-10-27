@@ -1,0 +1,63 @@
+﻿<div class="panel panel-default chart-container">
+
+    <div id="chart-container">
+        <div id="chartContainer" style="height: 640px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+    </div>
+
+
+    <div *ngIf="selectorVisible==true">
+        <dx-range-selector [dataSource]="chart?.points"
+            (onValueChanged)="valueChanged($event)">
+            <dxo-size [height]="100"></dxo-size>
+            <dxo-scale [minRange]="0.00000000001"></dxo-scale>
+            <dxo-slider-marker>
+                <dxo-format type="decimal"
+                    [precision]="0.00">
+                </dxo-format>
+            </dxo-slider-marker>
+            <dxo-behavior callValueChanged="onMoving"
+                [snapToTicks]="true">
+            </dxo-behavior>
+            <dxo-chart [useAggregation]="true">
+                <dxi-series argumentField="x" valueField="y0"></dxi-series>
+            </dxo-chart>
+        </dx-range-selector>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" checked="checked" (change)="onShowHideSeries($event)">
+            {{'chart-change-series-visibility-text' | translate}}:
+        </label>
+    </div>
+
+    <div>
+        <ul>
+            <li *ngFor="let series of pagedItems" class="series">
+                <input [id]="series.id" type="checkbox" [checked]="series.visible" style="margin-right:15px;" (change)="onSeriesClick(series)" />
+                <label [for]="series.id" style="cursor: pointer;">{{series.name}}</label>
+            </li>
+        </ul>
+
+        <ngb-pagination 
+            *ngIf="pager.pages && pager.pages.length"
+            [collectionSize]="pager.totalItems"
+            [pageSize]="pager.pageSize"
+            [maxSize]="5"
+            [rotate]="true"
+            (pageChange)="setPage($event)"
+            [boundaryLinks]="true">
+        </ngb-pagination>
+    </div>
+</div>
+<dx-load-panel
+    #loadPanel
+    [message]="'Loading chart data...' | translate"
+    shadingColor="rgba(127,127,127,0.4)"
+    [position]="{ of: '#chart-container' }"
+    [(visible)]="refreshing"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false">
+</dx-load-panel>

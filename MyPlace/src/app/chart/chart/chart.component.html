@@ -1,0 +1,125 @@
+﻿<div class="panel panel-default chart-container">
+    <div id="chart-container">
+        <dx-chart [useAggregation]="useAggregation"
+                  [synchronizeMultiAxes]="false"
+                  palette="Default"
+                  adjustOnZoom="false"
+                  scrollingMode="all"
+                  zoomingMode="all"
+                  (onLegendClick)="onLegendClick($event)"
+                  (onZoomEnd)="onZoomEnd($event)">
+            <dxi-value-axis [tickInterval]="50"></dxi-value-axis>
+            <dxo-argument-axis [visible]="true">
+                <dxo-grid></dxo-grid>
+                <dxo-title [font]="label?.font"></dxo-title>
+                <dxo-label [font]="label?.font"></dxo-label>
+            </dxo-argument-axis>
+
+            <dxo-common-series-settings argumentField="x" type="">
+                <dxo-line>
+                    <dxo-point></dxo-point>
+                </dxo-line>
+            </dxo-common-series-settings>
+
+            <dxo-crosshair [enabled]="true"
+                           color="#949494"
+                           [width]="1"
+                           dashStyle="dot">
+                <dxo-label [font]="label?.font"
+                           [format]="formatCrosshairLabel"
+                           [visible]="true">
+                </dxo-label>
+            </dxo-crosshair>
+
+            <dxo-legend [visible]="legendVisible"
+                        [customizeText]="formatLegendText">
+            </dxo-legend>
+
+            <!--<dxo-loading-indicator [show]="refreshing">
+    </dxo-loading-indicator>-->
+            <!--<dxo-loading-indicator text="Loading chart data...">
+    </dxo-loading-indicator>-->
+
+            <dxo-scroll-bar [visible]="true">
+            </dxo-scroll-bar>
+
+            <dxo-size [height]="640">
+            </dxo-size>
+
+            <dxo-tooltip [enabled]="true"
+                         [customizeTooltip]="formatTooltip">
+            </dxo-tooltip>
+
+            <dxi-value-axis [valueMarginsEnabled]="false">
+                <dxo-grid></dxo-grid>
+                <dxo-title [font]="label?.font"></dxo-title>
+                <dxo-label [font]="label?.font"></dxo-label>
+            </dxi-value-axis>
+
+            <dxi-value-axis name="z1"
+                            position="right">
+                <dxo-grid></dxo-grid>
+                <dxo-title [font]="label?.font"></dxo-title>
+                <dxo-label [font]="label?.font"></dxo-label>
+            </dxi-value-axis>
+
+        </dx-chart>
+    </div>
+
+
+    <div *ngIf="selectorVisible==true">
+        <dx-range-selector [dataSource]="chart?.points"
+            (onValueChanged)="valueChanged($event)">
+            <dxo-size [height]="100"></dxo-size>
+            <dxo-scale [minRange]="0.00000000001"></dxo-scale>
+            <dxo-slider-marker>
+                <dxo-format type="decimal"
+                    [precision]="0.00">
+                </dxo-format>
+            </dxo-slider-marker>
+            <dxo-behavior callValueChanged="onMoving"
+                [snapToTicks]="true">
+            </dxo-behavior>
+            <dxo-chart [useAggregation]="true">
+                <dxi-series argumentField="x" valueField="y0"></dxi-series>
+            </dxo-chart>
+        </dx-range-selector>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" checked="checked" (change)="onShowHideSeries($event)">
+            Show/hide all series:
+        </label>
+    </div>
+
+    <div>
+        <ul>
+            <li *ngFor="let series of pagedItems" class="series">
+                <input [id]="series.tag.uniqueId" type="checkbox" [checked]="series._visible===true" style="margin-right:15px;" (change)="onSeriesClick(series)" />
+                <label [for]="series.tag.uniqueId" style="cursor: pointer;">{{getLegendText(series)}}</label>
+            </li>
+        </ul>
+
+        <ngb-pagination 
+            *ngIf="pager.pages && pager.pages.length"
+            [collectionSize]="pager.totalItems"
+            [pageSize]="pager.pageSize"
+            [maxSize]="5"
+            [rotate]="true"
+            (pageChange)="setPage($event)"
+            [boundaryLinks]="true">
+        </ngb-pagination>
+    </div>
+</div>
+<dx-load-panel
+    #loadPanel
+    message="Loading chart data..."
+    shadingColor="rgba(127,127,127,0.4)"
+    [position]="{ of: '#chart-container' }"
+    [(visible)]="refreshing"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false">
+</dx-load-panel>

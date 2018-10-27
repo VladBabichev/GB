@@ -1,0 +1,26 @@
+﻿.stick-to-top {
+    top: 0;
+    z-index: 100;
+    position: fixed;
+    width: 100%;
+    padding: 15px 30px 15px 0;
+    background-color: white;
+}
+.new-wave.d-flex.justify-content-center.align-items-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/*#gridWidgets {
+    width: 100% !important;
+}*/
+
+.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row) > td:not(.dx-focused) {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.dx-datagrid-rowsview .dx-selection.dx-row > td, .dx-datagrid-rowsview .dx-selection.dx-row:hover > td {
+    background-color: #e6e6e6;
+    color: #333;
+}

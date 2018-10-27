@@ -1,0 +1,513 @@
+﻿<div #container *ngIf="step === 1">
+    <div #toolbar class="form-group" [ngClass]="{'stick-to-top': container.getBoundingClientRect().top < toolbar.getBoundingClientRect().height}">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Disable DevExpress plot button for now, because Canvas JS is so much faster
+                <button class="btn btn-primary"
+                        [disabled]="selected.length === 0 || selected.length > maxProjects"
+                        (click)="onPlot()">
+                    Plot selected<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                </button>-->
+                <button class="btn btn-primary"
+                        [disabled]="selected.length === 0 || selected.length > maxProjects"
+                        (click)="onPlotJS()">
+                    {{'Plot Selected' | translate}}<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                </button>
+
+                <dx-button 
+                    hint="{{'Add new project' | translate}}"
+                    icon="add"
+                    (onClick)="onAddNewProject()">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Refresh grid' | translate}}"
+                    icon="refresh"
+                    (onClick)="onRefresh()">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Clean up settings' | translate}}"
+                    icon="glyphicon glyphicon-erase"
+                    (onClick)="onToggleEraseSettingsClick()">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Stitch selected' | translate}}"
+                    icon="glyphicon glyphicon glyphicon-film"
+                    [disabled]="selected.length <= 1 || selected.length > maxProjects"
+                    (onClick)="onStitch()">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Create average plot' | translate}}"
+                    icon="glyphicon glyphicon-stats"
+                    [disabled]="!isAveragePlotCreationEnabled()"
+                    (onClick)="onAverage()">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Add view' | translate}}"
+                    icon="glyphicon glyphicon-list-alt"
+                    [disabled]="selected.length <= 0 || selected.length > maxProjects"
+                    (onClick)="onView()">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Update measurements' | translate}}"
+                    icon="glyphicon glyphicon-scale"
+                    [disabled]="selected.length <= 0 || selected.length > 1"
+                    (onClick)="onUpdateMeasurements()">
+                </dx-button>
+
+                <dx-button 
+                    [hint]="filterRowVisible ? 'Hide filter row' : 'Show filter row'"
+                    [class.active]="filterRowVisible"
+                    icon="glyphicon glyphicon-filter"
+                    (onClick)="onToggleFilterRowClick()">
+                </dx-button>
+
+                <dx-button 
+                    *ngIf="selected.length === 1"
+                    hint="{{'Download file' | translate}}"
+                    icon="download"
+                    [disabled]="isStitched"
+                    (onClick)="onProjectDownload(selected[0])">
+                </dx-button>
+
+                <dx-button 
+                    hint="{{'Delete selected projects' | translate}}"
+                    icon="glyphicon glyphicon-trash"
+                    [disabled]="selected.length === 0 || selected.length > maxProjects"
+                    (onClick)="onDelete()">
+                </dx-button>
+
+
+                <app-dropdown-box 
+                    #shareInstanceDropdownBox
+                    [style.visibility]="(selected.length > 0 && selected.length <= maxProjects ) ? 'visible' : 'hidden' "
+                    [tooltip]="translate('Share data')"
+                    [title]="translate('Share data')"
+                    class="app-dropdown-box">
+                    <span class="app-dropdown-box-button">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="caret"></span>
+                    </span>
+                    <ng-template>
+                        <app-share-instance-editor class="app-dropdown-box-content"
+                                                   (cancel)="shareInstanceDropdownBox.toggle()"
+                                                   (save)="shareInstanceDropdownBox.toggle(); onShareProjectSave($event)">
+                        </app-share-instance-editor>
+                    </ng-template>
+                </app-dropdown-box>
+            </div>
+
+            <div class="col-md-2 ml-md-auto">
+                <span>{{'project-selected' | translate}}: {{selected.length}}</span>
+                <dx-button 
+                    style="margin-left:10px;"
+                    hint="{{'Deselect all projects' | translate}}"
+                    icon="glyphicon glyphicon-unchecked"
+                    [disabled]="selected.length <= 0"
+                    (onClick)="onDeselectAllProjects()">
+                </dx-button>
+            </div>
+
+            <div class="col-md-4 ml-md-auto">
+                <input #txtFilter
+                       type="text"
+                       class="form-control dx-widget dx-texteditor-input"
+                       placeholder="{{'customFilter' | translate}}"
+                       title="{{'customFilter-hint' | translate}}"
+                       [(ngModel)]="customQuery"
+                       (change)="grid.instance.refresh()">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="selected.length > maxProjects" class="alert alert-danger">
+        {{'max-project-selection-reached' | translate:maxProjects}}
+    </div>
+
+    <dx-data-grid [allowColumnReordering]="true" id="projects"
+                  [allowColumnResizing]="true"
+                  [errorRowEnabled]="false"
+                  [rowAlternationEnabled]="true"
+                  columnResizingMode="widget"
+                  [customizeColumns]="customizeColumns"
+                  [dataSource]="dataSource"
+                  [showRowLines]="true"
+                  [columnAutoWidth]="true"
+                  [columnFixing]="true"
+                  [(selectedRowKeys)]="selected"
+                  (onCellPrepared)="onCellPrepared($event)"
+                  (onEditingStart)="onEditingStart($event)"
+                  (onEditorPreparing)="onEditorPreparing($event)"
+                  (onRowPrepared)="onRowPrepared($event)"
+                  (onSelectionChanged)="onSelectionChanged($event)"
+                  (onOptionChanged)="onSearch($event)"
+                  (onRowClick)="onRowClick($event)">
+
+        <dxo-filter-row [visible]="showFilterRow"
+                        [applyFilter]="currentFilter"></dxo-filter-row>
+        <dxo-header-filter [visible]="showHeaderFilter"></dxo-header-filter>
+        <dxo-state-storing type="custom"
+                           [enabled]="true"
+                           [savingTimeout]="1500"
+                           [customLoad]="loadProjectViewerState"
+                           [customSave]="saveProjectViewerState">
+        </dxo-state-storing>
+
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+
+        <dxo-column-chooser [enabled]="true"
+                            mode="select">
+        </dxo-column-chooser>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [allowSearch]="false"
+            dataField="traceId"
+            dataType="string"
+            [showInColumnChooser]="false"
+            [visible]="false">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [allowSearch]="true"
+            dataField="deviceId"
+            dataType="string"
+            [showInColumnChooser]="true"
+            [caption]="translate('dxDataGrid-deviceId')"                  
+            width="auto"
+            [visible]="true">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [allowSearch]="false"
+            dataField="ownerName"
+            [caption]="translate('dxDataGrid-ownerName')"                  
+            dataType="string"
+            [showInColumnChooser]="false"
+            [visible]="false">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="name"
+            dataType="string"
+            [caption]="translate('dxDataGrid-name')"                  
+            [editorOptions]="{ maxLength: 256 }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            dataField="fileName"
+            dataType="string"
+            [caption]="translate('dxDataGrid-fileName')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [calculateDisplayValue]="formatFileSize"
+            calculateSortValue="fileSize"
+            dataField="fileSize"
+            dataType="number"
+            [caption]="translate('dxDataGrid-fileSize')"                  
+            [formItem]="{ visible: false }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="testName"
+            dataType="string"
+            [caption]="translate('dxDataGrid-testName')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="testType"
+            dataType="string"
+            [caption]="translate('dxDataGrid-testType')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="channel"
+            dataType="string"
+            [caption]="translate('dxDataGrid-channel')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="tag"
+            dataType="string"
+            [caption]="translate('dxDataGrid-tag')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 256 }">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [calculateFilterExpression]="calculateDateTimeFilterExpression"
+            [caption]="translate('dxDataGrid-createdAt')"                  
+            dataField="createdAt"
+            dataType="date"
+            format="shortDateShortTime"
+            [formItem]="{ visible: false }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [calculateFilterExpression]="calculateDateTimeFilterExpression"
+            dataField="updatedAt"
+            dataType="date"
+            [caption]="translate('dxDataGrid-updatedAt')"                  
+            format="shortDateShortTime"
+            [formItem]="{ visible: false }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="mass"
+            [caption]="translate('dxDataGrid-mass')"                  
+            dataType="number"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            [caption]="translate('dxDataGrid-activeMaterialFraction')"                  
+            dataField="activeMaterialFraction"
+            dataType="number"
+            width="auto"
+            [allowSearch]="false"
+            [visible]="false">
+        </dxi-column>
+
+        <dxi-column 
+            [caption]="translate('dxDataGrid-theoreticalCapacity')"                  
+            dataField="theoreticalCapacity"
+            dataType="number"
+            width="auto"
+            [allowSearch]="false"
+            [visible]="false">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="area"
+            [caption]="translate('dxDataGrid-area')"                  
+            dataType="number"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [calculateDisplayValue]="formatNumCycles"
+            [caption]="translate('dxDataGrid-numCycles')"                  
+            dataField="numCycles"
+            dataType="number"
+            [formItem]="{ visible: false }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="batteryName"
+            dataType="string"
+            [caption]="translate('dxDataGrid-batteryName')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="build"
+            dataType="string"
+            [caption]="translate('dxDataGrid-build')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="packSupplier"
+            [caption]="translate('dxDataGrid-packSupplier')"                  
+            dataType="string"
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="cellSupplier"
+            dataType="string"
+            [caption]="translate('dxDataGrid-cellSupplier')"                  
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="temperature"
+            [caption]="translate('dxDataGrid-temperature')"                  
+            width="auto"
+            dataType="number">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="testOwner"
+            dataType="string"
+            [caption]="translate('dxDataGrid-testOwner')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="serialNumber"
+            dataType="string"
+            [caption]="translate('dxDataGrid-serialNumber')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="technology"                
+            dataType="string"
+            [caption]="translate('dxDataGrid-technology')"                  
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="true"
+            [calculateFilterExpression]="calculateDateTimeFilterExpression"
+            dataField="startDate"
+            dataType="date"
+            [caption]="translate('dxDataGrid-startDate')"                  
+            format="shortDateShortTime"
+            [formItem]="{ visible: true }"
+            width="auto">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="nameplateCapacity"
+            [caption]="translate('dxDataGrid-nameplateCapacity')"                  
+            dataType="string"
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="tester"
+            [caption]="translate('dxDataGrid-tester')"                  
+            dataType="string"
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="procedure"
+            [caption]="translate('dxDataGrid-procedure')"                  
+            dataType="string"      
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            dataField="comments"
+            [caption]="translate('dxDataGrid-comments')"                  
+            dataType="string"  
+            width="auto"
+            [editorOptions]="{ maxLength: 256, height: 100 }">
+        </dxi-column>
+        <dxi-column 
+            dataField="deviceName"
+            [caption]="translate('dxDataGrid-deviceName')"                  
+            dataType="string"
+            width="auto"
+            [editorOptions]="{ maxLength: 128 }">
+        </dxi-column>
+
+        <dxi-column 
+            [allowEditing]="false"
+            [allowSearch]="false"
+            [caption]="translate('dxDataGrid-stitchedFromNames')"                  
+            dataField="stitchedFromNames"
+            dataType="string"
+            [showInColumnChooser]="false"
+            [visible]="false">
+        </dxi-column>
+
+        <dxo-editing 
+            [allowDeleting]="true"
+            [allowUpdating]="true"
+            mode="form">
+            <dxo-form [customizeItem]="customizeItem">
+            </dxo-form>
+        </dxo-editing>
+
+        <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+        <dxo-filter-builder-popup
+            [position]="filterBuilderPosition">
+        </dxo-filter-builder-popup>
+
+        <dxo-filter-row [visible]="filterRowVisible"></dxo-filter-row>
+
+        <dxo-grouping [contextMenuEnabled]="true">
+        </dxo-grouping>
+
+        <dxo-group-panel [visible]="true">
+        </dxo-group-panel>
+
+        <dxo-pager [allowedPageSizes]="[10, 20, 50]"
+                   [showInfo]="true"
+                   [showNavigationButtons]="true"
+                   [showPageSizeSelector]="true"
+                   [visible]="true">
+        </dxo-pager>
+
+        <dxo-paging [enabled]="true"
+                    [pageSize]="10">
+        </dxo-paging>
+
+        <dxo-selection mode="multiple"
+                       [allowSelectAll]="false">
+        </dxo-selection>
+
+        <dxo-search-panel [visible]="true" 
+                          [width]="getWidth(txtFilter)" >
+        </dxo-search-panel>
+
+        <dxo-scrolling [showScrollbar]="onHower" 
+                       [useNative]="false">
+        </dxo-scrolling>
+
+    </dx-data-grid>
+
+</div>
+
+<div *ngIf="step === 2">
+    <app-chart-view (close)="onCloseChart()">
+    </app-chart-view>
+</div>
+
+<div *ngIf="step === 3">
+    <app-stitcher [projects]="selectedProjects" (close)="onCloseStitcher()">
+    </app-stitcher>
+</div>
+
+<div *ngIf="step === 4">
+    <app-view [projects]="selectedProjects" [plotTemplates]="plotTemplates" (close)="onCloseView()">
+    </app-view>
+</div>
+
+<div *ngIf="step === 5">
+    <app-statistic-project [projects]="selectedProjects" (close)="onCloseStitcher()">
+    </app-statistic-project>
+</div>
+
+<div *ngIf="step === 0">
+    <app-chartjs-view (close)="onCloseChart()" [displayBackButton]="true">
+    </app-chartjs-view>
+</div>

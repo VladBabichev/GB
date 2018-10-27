@@ -1,0 +1,42 @@
+<app-modal
+    [title]="title"
+    [activeModal]="activeModal">
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-12">
+            <form [formGroup]="form" novalidate>
+                <div class="form-group">
+                    <label for="measureIndex">{{targetType}} index:</label>
+                    <dx-number-box 
+                        formControlName="measureIndex"
+                        format="#0"
+                        [inputAttr]="{id: 'measureIndex'}"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true"
+                        [min]="0"
+                        [max]="100000">
+                    </dx-number-box>
+                </div>
+                <div class="form-group">
+                    <label for="measureValue">Expected value ({{unit}}):</label>
+                    <dx-number-box 
+                        formControlName="measureValue"
+                        [inputAttr]="{id: 'measureValue'}"
+                        [showSpinButtons]="true"
+                        [showClearButton]="true">
+                    </dx-number-box>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer eng-modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close('CancelTemplateSaving')">Cancel</button>
+        <button 
+            type="button"
+            class="btn btn-primary" 
+            (click)="onCreateExpectation()">Create</button>
+    </div>
+</app-modal>
+
+

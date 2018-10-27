@@ -1,0 +1,235 @@
+﻿<div class="row justify-content-md-center">
+	<div class="col-md-offset-3 col-md-12">
+		<!--header and tabs row-->
+		<div class="row">
+			<!--refresh button and header-->
+			<div class="col-md-6">
+				<dx-button hint="Refresh"
+						   icon="refresh"
+						   (onClick)="onRefresh()">
+				</dx-button>
+				<span style="font-size:x-large;margin-left:15px">Resource Groups Administration</span>
+			</div>
+
+			<!--resource tabs-->
+			<div class="col-md-6">
+				<dx-tabs #apiResourceTabs
+						 [dataSource]="resourceTabs"
+						 [selectedIndex]="0"
+						 (onItemClick)="selectResourceTab($event)">
+				</dx-tabs>
+			</div>
+		</div>
+
+		<!--grid row-->
+		<div class="row">
+			<!--resource groups grid-->
+			<div class="col-md-6" style="margin-top:5px">
+				<dx-data-grid id="gridResourceGroups"
+							  keyExpr="resourceGroupId"
+							  [dataSource]="resourceGroups"
+							  (onContentReady)="onContentReady($event)"
+							  (onRowRemoved)="onRowRemoved($event)"
+							  (onRowUpdated)="onResourceGroupUpdated($event)"
+							  (onRowInserted)="onResourceGroupInserted($event)"
+							  (onSelectionChanged)="onSelectionChanged($event)"
+							  [allowColumnReordering]="false">
+
+					<dxo-editing mode="popup"
+								 [allowDeleting]="true"
+								 [allowAdding]="true"
+								 [allowUpdating]="true">
+						<dxo-popup title="Resource Group"
+								   [closeOnOutsideClick]="true"
+								   [showTitle]="true"
+								   [width]="600"
+								   [height]="220">
+						</dxo-popup>
+					</dxo-editing>
+					<dxi-column dataField="name"
+								dataType="string"
+								width="100%"
+								caption="Resource Group">
+					</dxi-column>
+
+					<dxo-selection mode="single"
+								   [allowSelectAll]="false">
+					</dxo-selection>
+					<dxo-search-panel [visible]="true"></dxo-search-panel>
+					<dxo-paging [enabled]="false"></dxo-paging>
+				</dx-data-grid>
+			</div>
+
+			<!--resource grids-->
+			<div *ngIf='resourceTab == "Projects"' class="col-md-6" style="margin-top:5px">
+				<dx-data-grid id="gridProjects"
+							  [dataSource]="projects"
+							  (onRowUpdated)="onResourceUpdated($event)"
+							  [allowColumnReordering]="false">
+
+					<dxo-editing mode="cell" [allowUpdating]="true">
+					</dxo-editing>
+					<dxi-column dataField="name" [allowEditing]="false"
+								dataType="string"
+								width="80%"
+								caption="Name">
+					</dxi-column>
+					<dxi-column dataField="isSelected"
+								caption="Selected">
+					</dxi-column>
+
+					<dxi-column dataField="resourceId" [visible]="false"></dxi-column>
+					<dxi-column dataField="resourceGroupId" [visible]="false"></dxi-column>
+					<dxo-search-panel [visible]="true"></dxo-search-panel>
+					<dxo-pager [allowedPageSizes]="[10, 20, 50]"
+							   [showInfo]="true"
+							   [showNavigationButtons]="true"
+							   [showPageSizeSelector]="true"
+							   [visible]="true">
+					</dxo-pager>
+
+					<dxo-paging [enabled]="true"
+								[pageSize]="10">
+					</dxo-paging>
+				</dx-data-grid>
+			</div>
+
+			<div *ngIf='resourceTab == "Plot Templates"' class="col-md-6" style="margin-bottom:5px">
+				<dx-data-grid id="gridTemplates"
+							  [dataSource]="templates"
+							  (onRowUpdated)="onResourceUpdated($event)"
+							  [allowColumnReordering]="false">
+
+					<dxo-editing mode="cell" [allowUpdating]="true">
+					</dxo-editing>
+					<dxi-column dataField="name" [allowEditing]="false"
+								dataType="string"
+								width="80%"
+								caption="Name">
+					</dxi-column>
+					<dxi-column dataField="isSelected"
+								caption="Selected">
+					</dxi-column>
+
+					<dxi-column dataField="resourceId" [visible]="false"></dxi-column>
+					<dxi-column dataField="resourceGroupId" [visible]="false"></dxi-column>
+					<dxo-search-panel [visible]="true"></dxo-search-panel>
+					<dxo-pager [allowedPageSizes]="[10, 20, 50]"
+							   [showInfo]="true"
+							   [showNavigationButtons]="true"
+							   [showPageSizeSelector]="true"
+							   [visible]="true">
+					</dxo-pager>
+
+					<dxo-paging [enabled]="true"
+								[pageSize]="10">
+					</dxo-paging>
+				</dx-data-grid>
+			</div>
+
+			<div *ngIf='resourceTab == "Views"' class="col-md-6" style="margin-bottom:5px">
+				<dx-data-grid id="gridViews"
+							  [dataSource]="views"
+							  (onRowUpdated)="onResourceUpdated($event)"
+							  [allowColumnReordering]="false">
+
+					<dxo-editing mode="cell" [allowUpdating]="true">
+					</dxo-editing>
+					<dxi-column dataField="name" [allowEditing]="false"
+								dataType="string"
+								width="80%"
+								caption="Name">
+					</dxi-column>
+					<dxi-column dataField="isSelected"
+								caption="Selected">
+					</dxi-column>
+
+					<dxi-column dataField="resourceId" [visible]="false"></dxi-column>
+					<dxi-column dataField="resourceGroupId" [visible]="false"></dxi-column>
+					<dxo-search-panel [visible]="true"></dxo-search-panel>
+					<dxo-pager [allowedPageSizes]="[10, 20, 50]"
+							   [showInfo]="true"
+							   [showNavigationButtons]="true"
+							   [showPageSizeSelector]="true"
+							   [visible]="true">
+					</dxo-pager>
+
+					<dxo-paging [enabled]="true"
+								[pageSize]="10">
+					</dxo-paging>
+				</dx-data-grid>
+			</div>
+
+			<div *ngIf='resourceTab == "Specifications"' class="col-md-6" style="margin-bottom:5px">
+				<dx-data-grid id="gridSpecifications"
+							  [dataSource]="specifications"
+							  (onRowUpdated)="onResourceUpdated($event)"
+							  [allowColumnReordering]="false">
+
+					<dxo-editing mode="cell" [allowUpdating]="true">
+					</dxo-editing>
+					<dxi-column dataField="name" [allowEditing]="false"
+								dataType="string"
+								width="80%"
+								caption="Name">
+					</dxi-column>
+					<dxi-column dataField="isSelected"
+								caption="Selected">
+					</dxi-column>
+
+					<dxi-column dataField="resourceId" [visible]="false"></dxi-column>
+					<dxi-column dataField="resourceGroupId" [visible]="false"></dxi-column>
+					<dxo-search-panel [visible]="true"></dxo-search-panel>
+					<dxo-pager [allowedPageSizes]="[10, 20, 50]"
+							   [showInfo]="true"
+							   [showNavigationButtons]="true"
+							   [showPageSizeSelector]="true"
+							   [visible]="true">
+					</dxo-pager>
+
+					<dxo-paging [enabled]="true"
+								[pageSize]="10">
+					</dxo-paging>
+				</dx-data-grid>
+			</div>
+
+			<div *ngIf='resourceTab == "Dashboards"' class="col-md-6" style="margin-bottom:5px">
+				<dx-data-grid id="gridDashboards"
+							  [dataSource]="dashboards"
+							  (onRowUpdated)="onResourceUpdated($event)"
+							  [allowColumnReordering]="false">
+
+					<dxo-editing mode="cell" [allowUpdating]="true">
+					</dxo-editing>
+					<dxi-column dataField="name" [allowEditing]="false"
+								dataType="string"
+								width="80%"
+								caption="Name">
+					</dxi-column>
+					<dxi-column dataField="isSelected"
+								caption="Selected">
+					</dxi-column>
+
+					<dxi-column dataField="resourceId" [visible]="false"></dxi-column>
+					<dxi-column dataField="resourceGroupId" [visible]="false"></dxi-column>
+					<dxo-search-panel [visible]="true"></dxo-search-panel>
+					<dxo-pager [allowedPageSizes]="[10, 20, 50]"
+							   [showInfo]="true"
+							   [showNavigationButtons]="true"
+							   [showPageSizeSelector]="true"
+							   [visible]="true">
+					</dxo-pager>
+
+					<dxo-paging [enabled]="true"
+								[pageSize]="10">
+					</dxo-paging>
+				</dx-data-grid>
+			</div>
+
+			<div *ngIf='resourceTab == "Devices"' class="col-md-6" style="margin-bottom:5px">
+				<span>To do</span>
+			</div>
+
+		</div>
+	</div>
+</div>

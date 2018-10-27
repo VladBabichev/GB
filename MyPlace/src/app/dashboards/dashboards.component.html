@@ -1,0 +1,109 @@
+﻿<div class="row">
+	<!-- Menu ====================================== -->
+    <div *ngIf="mode !='edit' && mode !='config'" class="row col-md-12">
+        <div class="col-md-3">         
+            <dx-lookup [dataSource]="dataSource" #lookUp
+                       [grouped]="false"
+                       [(value)]="dashboardId"
+                       placeholder="Select dashboard"
+                       (onValueChanged)="onDashboardChanged($event)"
+                       [closeOnOutsideClick]="true"
+                       [showPopupTitle]="false"
+                       [showCancelButton]="false"
+                       displayExpr="name">               
+            </dx-lookup>
+        </div>
+        <div class="col-md-8" style="float:left">
+            <span>
+                <dx-button style="border:none;font-size:small;"
+						   [icon]="favoritesIcon" 
+						   [hint]="hintFavorite"
+                           [disabled]="dashboardId <= 0"
+                           (onClick)="onFavorites($event)">
+                </dx-button>
+                <dx-button style="border:none;font-size:small;"
+						   icon="glyphicon glyphicon-plus" 
+						   hint="Add new dashboard."
+                           text="Add"                         
+                           (onClick)="onAddDashboard()">
+                </dx-button>
+                <dx-button style="border:none;font-size:small;"
+						   icon="glyphicon glyphicon-remove" 
+						   hint="Delete current dashboard."
+                           text="Delete"
+                           [disabled]="dashboardId <= 0 "
+                           (onClick)="onDeleteDashboard()">
+                </dx-button>
+                <dx-button style="border:none;font-size:small;"
+						   icon="glyphicon glyphicon-pencil" 
+						   hint="Modify current dashboard."
+                           text="Edit"
+                           [disabled]="dashboardId <= 0 "
+                           (onClick)="onDashboardWidgetsEdit($event)">
+                </dx-button>
+                <dx-button style="border:none;font-size:small;"
+						   icon="glyphicon glyphicon-refresh" 
+						   hint="Refresh current dashboard."
+                           text="Refresh"
+                           [disabled]="dashboardId <= 0"
+                           (onClick)="onRefresh()">
+                </dx-button>
+            </span>
+        </div>
+        <div class="col-md-1">
+            <div style="float:right">
+                <dx-button style="border:none;font-size:small;"
+						   icon="glyphicon glyphicon-cog" 
+						   hint="Manage dashboard."
+                           (onClick)="onEditDashboard()">
+                </dx-button>
+            </div>
+        </div>
+    </div>
+
+	<!-- Widgets =========================================== -->
+    <div [class]="class">
+        <app-dashboard-widgets #dWidgets 
+							   (onContainerRefresh)="onContainerRefresh()" 
+							   (onAddWidgetButtonClick)="onDashboardWidgetsEdit($event)"
+							   (bubble)="onBubble($event)">
+
+		</app-dashboard-widgets>
+
+        <!--<div *ngIf="widgetViewVisible" class="center-div"
+             [style.height.px]="height" [style.width.px]="width">
+            <app-widgetFactory [widget]="widget"></app-widgetFactory>
+        </div>-->
+    </div>
+    <!--[style.height.px]="height" [style.width.px]="width" [ngStyle]="{'width': width+'px', 'height': height+'px'}">-->
+
+	<!-- Widget Configure =================================== -->
+    <div *ngIf="mode=='config'" class="col-md-3">
+        <app-widgetConfig (bubble)="onBubble($event)"></app-widgetConfig>
+    </div>
+
+	<!-- ??? ============================================================= -->
+    <div *ngIf="mode=='copy'" class="col-md-3">
+        <div>Select a dashboard</div>
+        <div>By selecting a dashboard you will create a copy of Other Links as a widget on that dashboard</div>
+        <dx-select-box [dataSource]="dashboardsCopy" class="form-control dx-texteditor-input"
+                       displayExpr="name"
+                       valueExpr="id"
+                       (onValueChanged)="onDashboardValueChanged2($event)"
+                       itemTemplate="item">
+            <div *dxTemplate="let data of 'item'">
+                <div style="display:inline-block">{{data.name}}</div>
+            </div>
+        </dx-select-box>
+        <span>
+            <dx-button text="Ok"
+                       type="default"
+                       (onClick)="onCopy($event)">
+            </dx-button>
+            <dx-button text="Cancel"
+                       type="default"
+                       (onClick)="onCancelCopy($event)">
+            </dx-button>
+        </span>
+    </div>
+</div>

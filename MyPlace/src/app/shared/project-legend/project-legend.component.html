@@ -1,0 +1,53 @@
+﻿<ul *ngIf="projects" class="list-group">
+    <li class="list-group-item disabled">
+        <strong>{{'Selected projects' | translate}}:</strong>
+    </li>
+    <li class="list-group-item disabled" style="padding: 0;">
+        <dx-data-grid
+            *ngIf="projects"
+            [allowColumnReordering]="false"
+            [allowColumnResizing]="false"
+            [dataSource]="projects"
+            [showRowLines]="true">
+
+            <dxo-sorting mode="none"></dxo-sorting>
+
+            <dxi-column
+                [width]="65"
+                [minWidth]="65"
+                [allowResizing]="false"
+                [allowReordering]="false"
+                cellTemplate="rowIndexCellTemplate">
+            </dxi-column>
+
+            <dxi-column
+                [allowEditing]="false"
+                dataField="name"
+                caption="{{'dxDataGrid-name' | translate}}"
+                dataType="string"
+                width="auto">
+            </dxi-column>
+
+            <dxi-column
+                [allowEditing]="false"
+                dataField="fileName"
+                caption="{{'dxDataGrid-fileName' | translate}}"
+                dataType="string">
+            </dxi-column>
+
+            <dxi-column
+                [allowEditing]="false"
+                caption="{{'dxDataGrid-numCycles' | translate}}"
+                dataField="numCycles"
+                width="auto">
+            </dxi-column>
+
+            <div *dxTemplate="let cellData of 'rowIndexCellTemplate'">
+                <div style="text-align: center">
+                    {{cellData.rowIndex + 1}}
+                </div>
+            </div>
+
+        </dx-data-grid>
+    </li>
+</ul>

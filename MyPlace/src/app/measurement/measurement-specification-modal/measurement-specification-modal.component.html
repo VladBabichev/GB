@@ -1,0 +1,54 @@
+<app-modal
+    [title]="title"
+    [activeModal]="activeModal">
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-12 specification-selection">
+
+            <dx-data-grid 
+                [noDataText]="'select-specification-dxDataGrid-noSpecificationText' | translate"
+                [rowAlternationEnabled]="true"
+                [showColumnLines]="false"
+                [showRowLines]="false"
+                [dataSource]="specifications"
+                [remoteOperations]="true"
+                (onCellPrepared)="onSpecificationCellPrepared($event)"
+                (onSelectionChanged)="onSpecificationSelectionChanged($event)">
+
+                <dxo-search-panel
+                    [visible]="true">
+                </dxo-search-panel>
+            
+                <dxi-column 
+                    dataField="name"
+                    [caption]="'dxDataGrid-name' | translate"
+                    [width]="60+'%'">
+                </dxi-column>
+
+                <dxi-column 
+                    dataField="unit"
+                    [caption]="'dxDataGrid-unit' | translate"
+                    dataType="string">
+                </dxi-column>
+
+                <dxo-pager 
+                    [showInfo]="true"
+                    [showNavigationButtons]="true"
+                    [showPageSizeSelector]="false"
+                    [visible]="true">
+                </dxo-pager>
+
+                <dxo-paging [pageSize]="10"></dxo-paging>
+                <dxo-selection 
+                    mode="multiple"
+                    [allowSelectAll]="false">
+                </dxo-selection>
+            </dx-data-grid>
+        </div>
+    </div>
+
+    <div class="modal-footer eng-modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close('CancelTemplateSaving')">{{'Cancel' | translate}}</button>
+        <button type="button" class="btn btn-primary" (click)="onSave()">{{'Apply' | translate}}</button>
+    </div>
+</app-modal>

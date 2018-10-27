@@ -1,0 +1,77 @@
+﻿
+<div class="row justify-content-md-center">
+	<div class="col-md-12">
+		<div>
+			<dx-button hint="Refresh grid"
+					   icon="refresh"
+					   (onClick)="onRefresh()">
+			</dx-button>
+			<span style="font-size:x-large;margin-left:15px">Users Administration</span>
+		</div>
+
+		<button type="button" class="btn btn-link" (click)="showActiveUsers()">Active Users</button>
+		<button type="button" class="btn btn-link" (click)="showInActiveUsers()">Inactive Users</button>
+
+		<dx-data-grid #rolesGrid
+					  id="gridUserRoles"
+					  [dataSource]="userRoles"
+					  (onRowRemoving)="onRowRemoving($event)"
+					  (onRowUpdated)="onRowUpdated($event)"
+					  [(selectedRowKeys)]="selected"
+					  (onEditorPreparing)="onEditorPreparing($event)"
+					  [allowColumnReordering]="false">
+
+			<dxo-editing mode="cell" [allowUpdating]="true" [allowDeleting]="true">
+			</dxo-editing>
+			<dxi-column dataField="userName" [allowEditing]="false"
+						dataType="string"
+						caption="User">
+			</dxi-column>
+			<dxi-column dataField="email" [allowEditing]="false"
+						dataType="string"
+						caption="Email">
+			</dxi-column>
+
+			<dxi-column dataField="companyId" caption="Company" [visible]=isOwner [editorOptions]="{ placeholder: 'Select company' }">
+				<dxo-lookup [dataSource]="companies"
+							valueExpr="companyId"
+							displayExpr="companyName">
+				</dxo-lookup>
+			</dxi-column>
+			<dxi-column dataField="roleId" caption="Role">
+				<dxo-lookup [dataSource]="roles"
+							valueExpr="roleId"
+							displayExpr="roleName">
+				</dxo-lookup>
+			</dxi-column>
+
+			<dxi-column 
+				dataField="isActive" 
+				caption="Actions" 
+				cellTemplate="actionCellTemplate"
+				[width]="130"
+				[allowEditing]="false">
+				<div *dxTemplate="let data of 'actionCellTemplate'">
+				  <div *ngIf="data.value == 1">
+					<button class="btn btn-info btn-user-action btn-grid-action" (click)="deactivateUser(data)">Deactivate</button>
+				  </div>
+				  <div *ngIf="data.value == 0">
+					<button 
+						class="btn btn-info btn-user-action btn-grid-action" 
+						[disabled]="!isActivationActionEnabled(data)"
+						(click)="activateUser(data)">Activate</button>
+				  </div>
+				</div>
+			</dxi-column>
+
+			<dxi-column dataField="userId" [visible]="false"></dxi-column>
+
+			<dxo-selection mode="single" [allowSelectAll]="false">
+			</dxo-selection>
+			<dxo-search-panel [visible]="true"></dxo-search-panel>
+			<dxo-paging [enabled]="false"></dxo-paging>
+	
+
+		</dx-data-grid>
+	</div>
+</div>
